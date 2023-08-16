@@ -25,8 +25,8 @@ public class BOS_FaqServiceImpl implements BOS_FaqService {
     }
 
     @Override
-    public int remove(Integer faqNo, String writer) throws Exception{
-        return BOSFaqDao.delete(faqNo,writer);
+    public int remove(Integer faqNo, Integer regrId) throws Exception{
+        return BOSFaqDao.delete(faqNo,regrId);
     }
 
     @Override
@@ -57,13 +57,23 @@ public class BOS_FaqServiceImpl implements BOS_FaqService {
 
 
     @Override
-    public List<FaqDTO> getSearchResultPage(SearchCondition sc)throws Exception{
-        return BOSFaqDao.searchSelectPage(sc);
+    public List<FaqDTO> getBosSearchSelectPage(SearchCondition sc)throws Exception{
+        return BOSFaqDao.BosSearchSelectPage(sc);
     }
 
     @Override
-    public int getSearchResultCnt(SearchCondition sc)throws Exception{
-        return BOSFaqDao.searchResultCnt(sc);
+    public int getBosSearchResultCnt(SearchCondition sc)throws Exception{
+        return BOSFaqDao.BosSearchResultCnt(sc);
+    }
+
+    @Override
+    public FaqDTO getPrevTitle(Integer faqNo) throws Exception{
+        return BOSFaqDao.selectPrev(faqNo);
+    }
+
+    @Override
+    public FaqDTO getNextTitle(Integer faqNo) throws Exception{
+        return BOSFaqDao.selectNext(faqNo);
     }
 
 }

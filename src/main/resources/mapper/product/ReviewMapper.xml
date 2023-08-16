@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.teamProject.syusyu.ReviewMapper">
+
+
+    <select id="count" resultType="int">
+        select count(*)
+        from review
+    </select>
+
+
+<!--    <select id="selectAll" parameterType="int" resultType="ReviewDTO">-->
+<!--        SELECT STAR_RATING,-->
+<!--               REGR_ID,-->
+<!--               REG_DTTM,-->
+<!--               SHOE_SIZE,-->
+<!--               HEIGHT,-->
+<!--               WEIGHT,-->
+<!--               LIKE_CNT,-->
+<!--               REVW_CN-->
+<!--        FROM review-->
+<!--        where PROD_ID = #{prodId}-->
+<!--        order by REG_DTTM DESC-->
+<!--    </select>-->
+
+    <select id="selectAll" parameterType="int" resultType="ReviewDTO">
+        SELECT
+               r.STAR_RATING,
+               r.REGR_ID,
+               m.LGIN_ID,
+               r.REG_DTTM,
+               r.SHOE_SIZE,
+               r.HEIGHT,
+               r.WEIGHT,
+               r.LIKE_CNT,
+               r.REVW_CN,
+               r.IMAGE_LIST
+        FROM review r, member m
+        WHERE r.REGR_ID = m.MBR_ID
+          AND r.PROD_ID = #{prodId}
+        ORDER BY r.REG_DTTM DESC;
+    </select>
+
+<!--    후기 작성 완료 MAPPER-->
+<!--    <select id="selectPage" parameterType="PageHandlerReview" resultType="ReviewDTO">-->
+<!--        SELECT-->
+<!--            r.REVW_NO ,     &#45;&#45; 리뷰 번호-->
+<!--            p.PROD_NM ,     &#45;&#45; 제품 이름-->
+<!--            b.BRND_KO_NM ,  &#45;&#45; 브랜드 이름-->
+<!--            r.STAR_RATING , &#45;&#45; 별점-->
+<!--            r.REG_DTTM ,    &#45;&#45; 작성날짜-->
+<!--            r.REVW_CN       &#45;&#45; 리뷰내용-->
+<!--        FROM review r-->
+<!--                 JOIN member m ON r.REGR_ID = m.MBR_ID-->
+<!--                 JOIN product p ON r.PROD_ID = p.PROD_ID-->
+<!--                 JOIN brand b ON p.BRND_ID = b.BRND_ID-->
+<!--                 JOIN ord o ON o.ORDR_ID = p.-->
+<!--        ORDER BY REVW_NO asc-->
+<!--            LIMIT #{offset}, #{pageSize}-->
+<!--    </select>-->
+
+<!--    <select id="selectPageCnt" parameterType="PageHandlerReview" resultType="int">-->
+<!--        SELECT count(*)-->
+<!--        FROM review r-->
+<!--                 JOIN member m ON r.REGR_ID = m.MBR_ID-->
+<!--                 JOIN product p ON r.PROD_ID = p.PROD_ID-->
+<!--                 JOIN brand b ON p.BRND_ID = b.BRND_ID-->
+<!--    </select>-->
+
+
+
+
+
+
+<!--    리뷰 작성-->
+<!--    상품아이디 , 별점 , 작성자 키 , 작성자 몸무게 , 발사이즈 , 리뷰 내용 , 작성자 아이디 -->
+<!--    insert문은 반환값은 항상 int 이다 -->
+<!--    왜 ? 삽입된 행의 수를 나타내기 때문에 성공시 항상 return 이 삽입된 행 갯수인 1이다.-->
+<!--    항사 1이기에 resultType을 안쓰나보다-->
+    <insert id="insert" parameterType="ReviewDTO">
+        INSERT INTO review
+            (PROD_ID, STAR_RATING, HEIGHT, WEIGHT, SHOE_SIZE, REVW_CN, REGR_ID ,IMAGE_LIST)
+        VALUES (#{prodId}, #{starRating}, #{height}, #{weight}, #{shoeSize}, #{revwCn}, #{regrId} , #{imageList})
+    </insert>
+
+
+<!--    리뷰 좋아요 표시 -->
+    <update id="increaseLikeCnt" parameterType="int">
+        update review
+        set     LIKE_CNT = LIKE_CNT + 1
+        where REVW_NO = #{revwNo}
+    </update>
+
+<!--    본인이 작성한 리뷰에 대한 수정-->
+<!--    조건으로 작성자 id , 작성한 글의 번호 , 상품에 id-->
+    <update id="update" parameterType="ReviewDTO">
+        UPDATE review
+        SET STAR_RATING = #{starRating},    --별점
+            HEIGHT = #{height},             -- 키
+            WEIGHT = #{weight},             -- 무게
+            SHOE_SIZE = #{shoeSize},        -- 신발 사이즈
+            REVW_CN = #{revwCn},            -- 리뷰 내용
+            UPD_DTTM = now(),                -- 글 수정한 시간
+            IMAGE_LIST = #{imageList}        -- 이미지 경로
+        WHERE REVW_NO = #{revwNo}           -- 리뷰 글 번호
+        AND REGR_ID = #{regrId}             -- 작성자 id
+        AND PROD_ID = #{prodId}             -- 상품 id
+    </update>
+
+
+<!--    작성자가 삭제요청을 할때 -->
+<!--    로그인 ID가 admin이 아닌 경우, deleteUser 메소드를 호출한다.-->
+    <delete id="deleteUser" parameterType="map">
+        DELETE
+        FROM review
+        WHERE REVW_NO = #{revwNo}           -- 리뷰 글번호
+        AND REGR_ID = #{regrId}             -- 작성자 id
+    </delete>
+
+
+
+<!-- ord, ord_Dtl, prod-->
+
+<!--    select *-->
+<!--    from ord o-->
+<!--    join ord_dtl od on o.ORD_NO = od.ORD_NO-->
+<!--    join product p on od.PROD_ID = p.PROD_ID-->
+<!--    where o.ORDR_ID = 80001-->
+<!--    and od.ORD_STUS = 60;-->
+
+<!--    select * from comm_code where CD_TP_NM like '%주문%';-->
+
+
+
+</mapper>

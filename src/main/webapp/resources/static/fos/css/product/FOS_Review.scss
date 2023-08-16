@@ -1,0 +1,23 @@
+#reviewImg{
+  width: 250px;
+  height: 150px;
+}
+.rev-detail {
+  display: flex;
+  align-items: center;
+}
+#ReviewInfo{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+#ReviewContent{
+ width: 70%;
+  margin-left: 40px;
+}
+
+#reviewList {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}

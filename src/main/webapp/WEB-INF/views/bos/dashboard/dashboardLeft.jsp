@@ -37,10 +37,11 @@
             </a>
             <div class="collapse" id="collapseProduct" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                 <nav class="sb-sidenav-menu-nested nav">
-                    <a class="nav-link" href="#">상품 조회 / 수정</a>
-                    <a class="nav-link" href="<c:url value='/admin/productRegister'/>">상품 등록</a>
+                    <a class="nav-link" href="<c:url value='/bos/product/productList'/>">상품 조회 / 수정</a>
+                    <a class="nav-link" href="<c:url value='/bos/productRegister'/>">상품 등록</a>
                     <a class="nav-link" href="#">상품 일괄 등록</a>
                     <a class="nav-link" href="#">배송정보관리</a>
+                    <a class="nav-link" href="<c:url value ='/bos/reviewList'/>"> 상품 리뷰 관리</a>
                 </nav>
             </div>
 
@@ -50,9 +51,9 @@
             </a>
             <div class="collapse" id="collapseSales" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                 <nav class="sb-sidenav-menu-nested nav">
-                    <a class="nav-link" href="/bos/orders/view">주문 통합 검색</a>
-                    <a class="nav-link" href="#">발주(주문)확인/발송관리 </a>
-                    <a class="nav-link" href="#">배송 현황 관리</a>
+                    <a class="nav-link" href="<c:url value="/bos/orderView"/>">주문 통합 검색</a>
+                    <a class="nav-link" href="<c:url value="/bos/dispatchManageView"/>">주문확인/발송관리</a>
+                    <a class="nav-link" href="<c:url value="/bos/deliveryManageView"/>">배송 현황 관리</a>
                     <a class="nav-link" href="#">구매 확정 내역</a>
                     <a class="nav-link" href="#">취소 관리</a>
                     <a class="nav-link" href="#">반품 관리</a>
@@ -79,7 +80,7 @@
             <div class="collapse" id="collapseCS" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                 <nav class="sb-sidenav-menu-nested nav">
                     <a class="nav-link" href="<c:url value='/adminNotice/list'/>"> 공지사항 관리</a>
-                    <a class="nav-link" href="">문의사항 관리</a>
+                    <a class="nav-link" href="<c:url value='/adminInqry/adminInqryList'/>">문의사항 관리</a>
                     <a class="nav-link" href="<c:url value ='/bos/faqList'/>"> FAQ 관리</a>
                 </nav>
             </div>

@@ -3,7 +3,6 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.teamProject.syusyu.InqryMapper">
-
     <select id="select" parameterType="int" resultType="InqryDTO">
         select INQRY_NO,
                INQRY_TP,
@@ -44,15 +43,15 @@
                UPD_DTTM,
                UPDR_ID
         from inqry
-        order by REG_DTTM DESC, INQRY_NO DESC
+        order by INQRY_NO DESC
         LIMIT #{offset}, #{pageSize}
     </select>
 
     <insert id="insert" parameterType="InqryDTO">
         INSERT INTO inqry
-            (TITLE, CONTENT, REGR_ID)
+            (INQRY_TP, TITLE, CONTENT, REGR_ID, REG_DTTM)
         VALUES
-            (#{title}, #{content}, #{regrId})
+            (#{inqryTp}, #{title}, #{content}, #{regrId},#{regDttm})
     </insert>
 
     <select id="count" resultType="int">
@@ -69,11 +68,29 @@
 
     <update id="update" parameterType="InqryDTO">
         UPDATE inqry
-        SET   title = #{title}
-          , content = #{content}
-          , up_date = now()
-        WHERE inqryNo = #{inqryNo} and writer = #{writer}
+        SET INQRY_TP = #{inqryTp},
+            TITLE = #{title},
+            CONTENT = #{content},
+            UPD_DTTM = NOW(),
+            INQRY_YN = <choose>
+                            <when test="ansCn != null">
+                                #{ansCn}
+                            </when>
+                            <otherwise>
+                                'N'
+                            </otherwise>
+                        </choose>
+        WHERE INQRY_NO = #{inqryNo}
     </update>
+
+    <update id="updateAnswer" parameterType="InqryDTO">
+        UPDATE inqry
+        SET ANS_CN = #{ansCn},
+            INQRY_YN = #{inqryYn}
+        WHERE INQRY_NO = #{inqryNo}
+    </update>
+
+
 
     <delete id="delete" parameterType="map">
         DELETE FROM inqry WHERE INQRY_NO = #{inqryNo} and REGR_ID = #{regrId}
@@ -84,6 +101,25 @@
         FROM inqry
         ORDER BY reg_date DESC, inqryNo DESC
     </select>
+
+    <!--    검색에 쓰이고 조건별로 사용할 동적쿼리 제목 , 글번호 , 제목+내용 -->
+    <sql id="searchCondition">
+        <choose>
+            <when test='option=="T"'>
+                AND TITLE LIKE CONCAT('%', #{keyword}, '%')
+            </when>
+            <when test='option=="C"'>
+                AND CONTENT LIKE CONCAT('%', #{keyword}, '%')
+            </when>
+            <when test='option=="N"'>
+                AND NOTC_NO LIKE CONCAT('%', #{keyword}, '%')
+            </when>
+            <otherwise>
+                AND (TITLE LIKE CONCAT('%', #{keyword}, '%')
+                OR CONTENT LIKE CONCAT('%', #{keyword}, '%'))
+            </otherwise>
+        </choose>
+    </sql>
 
 <!--    <sql id="selectFromBoard">-->
 <!--        SELECT inqryNo, title, content, writer, view_cnt, comment_cnt, reg_date-->

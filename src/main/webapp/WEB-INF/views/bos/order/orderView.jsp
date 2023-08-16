@@ -1,18 +1,16 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<head>
-    <script src="<c:url value="${jsUrlBos}/order/orderView.js"/>"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            orderView.initLoad();
-            orderView.bindButtonEvent();
-        });
-    </script>
-</head>
+<script src="<c:url value="${jsUrlBos}/order/orderView.js"/>"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        orderView.initLoad();
+        orderView.bindButtonEvent();
+    });
+</script>
 <div class="container-fluid px-4">
     <h1 class="mt-4">주문통합검색</h1>
 
-    <div class="search_form">
+    <div id="search_container" class="search_form">
         <table>
             <tr>
                 <th>기간</th>
@@ -69,16 +67,17 @@
             </tr>
             <tr>
                 <th>주문상태</th>
-                <td colspan="3" id="orderStatusCheck">
-                    <label><input type="checkbox" name="chk" class="chk-all" checked>전체</label>
+                <td colspan="3" id="orderStatusCheckbox">
+                    <label><input type="checkbox" id="chk-all" name="chk" checked>전체</label>
                     <label><input type="checkbox" name="chk" class="chk-point" value="10" checked>결제완료</label>
                     <label><input type="checkbox" name="chk" class="chk-point" value="20" checked>주문확인</label>
-                    <label><input type="checkbox" name="chk" class="chk-point" value="30" checked>배송중</label>
-                    <label><input type="checkbox" name="chk" class="chk-point" value="37" checked>배송완료</label>
-                    <label><input type="checkbox" name="chk" class="chk-point" value="40" checked>구매확정</label>
-                    <label><input type="checkbox" name="chk" class="chk-point" value="50" checked>주문취소</label>
-                    <label><input type="checkbox" name="chk" class="chk-point" value="60" checked>반품</label>
-                    <label><input type="checkbox" name="chk" class="chk-point" value="70" checked>교환</label>
+                    <label><input type="checkbox" name="chk" class="chk-point" value="30" checked>발송완료</label>
+                    <label><input type="checkbox" name="chk" class="chk-point" value="40" checked>집화완료</label>
+                    <label><input type="checkbox" name="chk" class="chk-point" value="50" checked>배송중</label>
+                    <label><input type="checkbox" name="chk" class="chk-point" value="60" checked>배송완료</label>
+                    <label><input type="checkbox" name="chk" class="chk-point" value="70" checked>주문취소</label>
+                    <label><input type="checkbox" name="chk" class="chk-point" value="80" checked>반품</label>
+                    <label><input type="checkbox" name="chk" class="chk-point" value="90" checked>교환</label>
                 </td>
             </tr>
         </table>
@@ -89,9 +88,14 @@
     </div>
 
     <div class="grid-container">
-        <div class="button_area">
-            <button id="btn_order_confirm" class="btn btn-outline-dark date_range">주문확인</button>
+        <div>
+            <div class="button_area">
+                <button id="btn_excel_download" class="btn btn-outline-dark date_range">엑셀 다운로드</button>
+            </div>
+            <div class="rowCount">
+                <p>총 건수 : <span class="h3_txt" id="resultCnt">0</span> 건</p>
+            </div>
         </div>
-        <div id="orderViewGrid"></div>
+        <div id="orderViewGrid" class="gridWrap"></div>
     </div>
 </div>

@@ -3,22 +3,20 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page session="false" %>
-<head>
-    <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
-    <script src="<c:url value="${jsUrlFos}/order/orderSheet.js?ddfdafd"/>"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            orderSheet.initLoad();
-            orderSheet.bindButtonEvent();
-        });
-    </script>
-</head>
+<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+<script src="<c:url value="${jsUrlFos}/order/orderSheet.js?ddfdafd"/>"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        orderSheet.initLoad();
+        orderSheet.bindButtonEvent();
+    });
+</script>
 <form name="FrmOrder" id="frm_order" method="post">
     <main>
         <div class="breadcrumb">
             <div class="breadcrumb-inner">
-                <a href="https://www.ottogimall.co.kr/front">홈</a>
-                <a href="javascript:;" onclick="location.reload();">주문결제</a>
+                <a href="<c:url value="/"/>">홈</a>
+                <a href="#" onclick="location.reload();">주문결제</a>
             </div>
         </div>
         <div class="content-title">
@@ -49,12 +47,12 @@
                                                 <div class="item-area">
                                                     <div class="prd-item etc-ty1">
                                                         <div class="thumbs hover">
-                                                            <a href="https://www.ottogimall.co.kr/front/product/525">
+                                                            <a href="#">
                                                                 <img src="${cartProd.repImg}" alt="스파게티 (150GX4)">
                                                             </a>
                                                         </div>
                                                         <div class="desc">
-                                                            <a href="https://www.ottogimall.co.kr/front/product/525">
+                                                            <a href="#">
                                                                 <p class="name">${cartProd.prodNm}</p>
                                                                 <div class="option">
                                                                     <p>
@@ -114,7 +112,7 @@
                                 </tr>
                                 <tr>
                                     <th>휴대전화</th>
-                                    <td>${memberInfo.mpNo}</td>
+                                    <td id="memberMpNoTxt">${memberInfo.mpNo}</td>
                                 </tr>
                                 <tr>
                                     <th>이메일</th>
@@ -169,17 +167,12 @@
                                     <th class="top">배송 요청사항</th>
                                     <td>
                                         <div class="select-inp">
-                                            <select name="rcvMemoClassifyIdx" id="rcv_def_memo_classify_idx" class="selectbox ty1 w-450">
+                                            <select name="dlvReqComt" id="dlvReqComt" class="selectbox ty1 w-450">
                                                 <option value="">배송 요청사항</option>
-
                                                 <option value="60">부재시 경비실에 맡겨주세요.</option>
-
                                                 <option value="63">부재시 전화주세요.</option>
-
                                                 <option value="61">문앞에 놓아주세요.</option>
-
                                                 <option value="62">택배보관실에 맡겨주세요.</option>
-
                                                 <option value="직접입력" data-select-inp="true">직접입력</option>
                                             </select>
                                             <div class="input w-450">
@@ -220,7 +213,7 @@
                                             <button type="button" class="btn ty2 c-ty5 w-90 free ml-10" id="bnt_coupon_select">
                                                 <span>쿠폰선택</span></button>
                                             <span class="ml-20 color-5">사용가능 쿠폰 <span class="color-1"
-                                                                                      id="useCouponCount">0장</span></span>
+                                                                                      id="useCouponCount">3장</span></span>
                                         </div>
                                         <ul class="list ty2 mt-10">
                                             <li>쿠폰은 할인이 들어가지 않은 상품에 대해서만 적용됩니다.</li>
@@ -239,7 +232,7 @@
                                             <button type="button" class="btn ty2 c-ty5 w-90 free ml-10 bt-smoney-whole">
                                                 <span>최대사용</span></button>
                                             <span class="ml-20 color-5">보유 포인트
-                                                <span class="color-1">1,000원</span>
+                                                <span class="color-1">5,200원</span>
                                             </span>
                                         </div>
                                         <ul class="list ty2 mt-10">
@@ -251,10 +244,11 @@
                             </table>
                         </div>
                     </section>
-                        <%-- 총 상품금액--%>
-<%--                        TODO 수정 필요 value에 값 박혀있음--%>
+                    <%--총 상품금액--%>
                     <input type="hidden" id="totProdAmt" value="${totProdAmt}">
-<%--                    배송비--%>
+                    <%--총 할인적용금액--%>
+                    <input type="hidden" id="totDcPrc" value="${totDcPrc}">
+                    <%--배송비--%>
                     <input type="hidden" id="dlvFee" value="${dlvFee}">
 
                     <!-- 쿠폰 -->
@@ -263,39 +257,39 @@
 
                     <input type="hidden" id="finalPayAmt">
 
-<%--                    <input type="hidden" id="totFinalNormalProdPrice" value="127480.00">--%>
-<%--                    <input type="hidden" id="totFinalColdProdPrice" value="0">--%>
+                    <%--                    <input type="hidden" id="totFinalNormalProdPrice" value="127480.00">--%>
+                    <%--                    <input type="hidden" id="totFinalColdProdPrice" value="0">--%>
 
-<%--                    <input type="hidden" id="couponExcludes" value="Y">--%>
-<%--                    <input type="hidden" id="basketKind" name="basketKind" value="1">--%>
-<%--                    <input type="hidden" id="tempPaidPrice" value="127480.00">--%>
-<%--                    <input type="hidden" id="totFinalDlvrFee" value="0">--%>
-<%--                    <input type="hidden" id="use_coupon_count" value="0">--%>
+                    <%--                    <input type="hidden" id="couponExcludes" value="Y">--%>
+                    <%--                    <input type="hidden" id="basketKind" name="basketKind" value="1">--%>
+                    <%--                    <input type="hidden" id="tempPaidPrice" value="127480.00">--%>
+                    <%--                    <input type="hidden" id="totFinalDlvrFee" value="0">--%>
+                    <%--                    <input type="hidden" id="use_coupon_count" value="0">--%>
 
-<%--                    <input type="hidden" id="baskets" name="baskets"--%>
-<%--                           value="34xRBwn2a0nj9M5aRamdvRtuAhIyxT2OFmzfVAmy9A8=">--%>
-<%--                    <input type="hidden" id="buyer_id" name="buyerId" value="2874133643">--%>
+                    <%--                    <input type="hidden" id="baskets" name="baskets"--%>
+                    <%--                           value="34xRBwn2a0nj9M5aRamdvRtuAhIyxT2OFmzfVAmy9A8=">--%>
+                    <%--                    <input type="hidden" id="buyer_id" name="buyerId" value="2874133643">--%>
 
-<%--                    <input type="hidden" name="totOrderPrice" value="127480.00">--%>
-<%--                    <input type="hidden" id="totDlvrFee" name="totDlvrFee" value="0">--%>
-<%--                    <input type="hidden" id="totCouponProdDiscPrice" name="totCouponProdDiscPrice" value="0">--%>
-<%--                    <input type="hidden" id="totCouponOrderDiscPrice" name="totCouponOrderDiscPrice" value="0">--%>
-<%--                    <input type="hidden" id="totCouponDlvrDiscPrice" name="totCouponDlvrDiscPrice" value="0">--%>
-<%--                    <input type="hidden" id="paidPrice" name="paidPrice" value="126480">--%>
+                    <%--                    <input type="hidden" name="totOrderPrice" value="127480.00">--%>
+                    <%--                    <input type="hidden" id="totDlvrFee" name="totDlvrFee" value="0">--%>
+                    <%--                    <input type="hidden" id="totCouponProdDiscPrice" name="totCouponProdDiscPrice" value="0">--%>
+                    <%--                    <input type="hidden" id="totCouponOrderDiscPrice" name="totCouponOrderDiscPrice" value="0">--%>
+                    <%--                    <input type="hidden" id="totCouponDlvrDiscPrice" name="totCouponDlvrDiscPrice" value="0">--%>
+                    <%--                    <input type="hidden" id="paidPrice" name="paidPrice" value="126480">--%>
 
-<%--                    <input type="hidden" id="paidCouponPrice" name="totCouponDiscPrice" value="0">--%>
+                    <%--                    <input type="hidden" id="paidCouponPrice" name="totCouponDiscPrice" value="0">--%>
 
-<%--                    <input type="hidden" id="productCouponIdxs" name="productCouponIdxs" value="[]">--%>
-<%--                    <input type="hidden" id="basketCouponIdx" name="basketCouponIdx" value="{}">--%>
-<%--                    <input type="hidden" id="dlvrCouponIdx" name="dlvrCouponIdx" value="{}">--%>
+                    <%--                    <input type="hidden" id="productCouponIdxs" name="productCouponIdxs" value="[]">--%>
+                    <%--                    <input type="hidden" id="basketCouponIdx" name="basketCouponIdx" value="{}">--%>
+                    <%--                    <input type="hidden" id="dlvrCouponIdx" name="dlvrCouponIdx" value="{}">--%>
 
-<%--                    <input type="hidden" id="payway" name="payway" value="">--%>
-<%--                    <input type="hidden" id="bill_reg_type" name="billRegType" value="">--%>
-<%--                    <input type="hidden" id="bill_reg_no" name="billRegNo" value="">--%>
+                    <%--                    <input type="hidden" id="payway" name="payway" value="">--%>
+                    <%--                    <input type="hidden" id="bill_reg_type" name="billRegType" value="">--%>
+                    <%--                    <input type="hidden" id="bill_reg_no" name="billRegNo" value="">--%>
 
-<%--                    <input type="hidden" id="dlvrIsolatedAreaPrice" name="dlvrIsolatedAreaPrice" value="0">--%>
-<%--                    <input type="hidden" id="dlvrIsolatedArea" name="dlvrIsolatedArea" value="false">--%>
-<%--                    <input type="hidden" id="couponDuplicateBe" value="0">--%>
+                    <%--                    <input type="hidden" id="dlvrIsolatedAreaPrice" name="dlvrIsolatedAreaPrice" value="0">--%>
+                    <%--                    <input type="hidden" id="dlvrIsolatedArea" name="dlvrIsolatedArea" value="false">--%>
+                    <%--                    <input type="hidden" id="couponDuplicateBe" value="0">--%>
 
 
                     <!-- 결제수단 -->
@@ -536,8 +530,7 @@
                             </strong>
                         </div>
                         <ul class="list ty2 mt-40">
-                            <li>무료배송 혜택 상품 및 배송 유형별 30,000원 이상 구매 시 무료배송입니다.</li>
-                            <li>배송 유형 간 교차 합계 금액은 무료배송에 적용되지 않습니다.<br> (상온 배송+저온 배송 합계 30,000원 무료배송불가)</li>
+                                <li>50,000원 이상 구매 시 무료배송입니다.</li>
                         </ul>
                     </div>
 

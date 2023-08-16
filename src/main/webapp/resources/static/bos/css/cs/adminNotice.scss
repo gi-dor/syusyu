@@ -4,12 +4,11 @@
 .container  {
   padding: 15px 25px 10px;
   width: 100%;
-  margin: 10px 20px 21px 22px;  /* 위 오른 아래 왼 */
+  margin: 10px 20px 10px 30px;  /* 위 오른 아래 왼 */
 }
 .title-t {
   font-weight: bold;
-  margin-left: 20px;
-  margin-top: 10px;
+  margin-left: 10px;
 }
 textarea {
   width: 100%;
@@ -33,7 +32,7 @@ textarea {
 .detail-cont{
   background-color: white;
   border: none;
-  padding: 20px;
+  padding: 30px;
   border-bottom: 1px solid #eee;
   line-height: 26px;
   padding-top: 15px;
@@ -90,6 +89,7 @@ a:hover{
 }
 
 .prev_next_title{
+  margin-top: 20px;
   list-style: none;
 }
 
@@ -97,7 +97,6 @@ a:hover{
 input {
   width: 100%;
   height: 35px;
-  margin: 15px 0px 10px 0px;
   padding: 10px;
   background: #eee;
   outline-color: #e6e6e6;
@@ -121,3 +120,78 @@ input {
 }
 
 
+
+
+
+#modifyBtn{
+  color: #fff;
+  background: #212529;
+  border: 0;
+  height: 30px;
+  width: 80px;
+  font-size: 15px;
+  border-radius: 5px;
+  margin :0 5px;
+}
+
+#modifyBtn:hover {
+  background: #5c636a;
+}
+#removeBtn{
+  color: #fff;
+  background: #212529;
+  border: 0;
+  height: 30px;
+  width: 80px;
+  font-size: 15px;
+  border-radius: 5px;
+  margin :0 5px;
+}
+#removeBtn:hover {
+  background: #5c636a;
+}
+
+#listBtn{
+  color: #fff;
+  background: #212529;
+  border: 0;
+  height: 30px;
+  width: 80px;
+  font-size: 15px;
+  border-radius: 5px;
+  margin-right:20px;
+  margin-left: 5px;
+}
+#listBtn:hover{
+  background: #5c636a;
+}
+
+#titleForm{
+  width: 100%;
+  height: 20px;
+  background-color: white;
+  padding-left: 20px;
+}
+#titleFormFirst{
+  font-size: 20px;
+  padding-top: 15px;
+  padding-bottom: 10px;
+  padding-left: 20px;
+}
+
+#titleFormSecond{
+  font-size: 15px;
+  color: #888;
+  padding-left: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+#contentForm{
+  width: 100%;
+  height: 20px;
+  background-color: white;
+}
+#threeBtn{
+  padding-bottom: 20px;
+}

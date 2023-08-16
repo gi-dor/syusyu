@@ -21,11 +21,11 @@ public class CartProdDAOImpl implements CartProdDAO {
     /**
      * 특정고객 장바구니아이디를 가지고 있는지 조회
      *
-     * @param mbrCd 장바구니를 조회할 사용자의 아이디
+     * @param mbrId 장바구니를 조회할 사용자의 아이디
      * @return insert row 수
      * @throws Exception DB 삽입 도중 발생할 수 있는 예외
      * @author soso
-     * @since  2023/07/03
+     * @since  2023/07/25
      */
     @Override
     public CartProdDTO selectHaveCart(int mbrId) throws Exception{
@@ -35,11 +35,11 @@ public class CartProdDAOImpl implements CartProdDAO {
      * 특정고객 장바구니 아이디생성
      * 고객이 장바구니를 가지고 있지않으면 장바구니 아이디를 부여
      *
-     * @param cartProductDTO (장바구니ID, 등록자)장바구니번호 생성
+     * @param cartProdDTO (장바구니ID, 등록자)장바구니번호 생성
      * @return insert row 수
      * @throws Exception DB 삽입 도중 발생할 수 있는 예외
      * @author soso
-     * @since  2023/07/03
+     * @since  2023/07/25
      */
     @Override
     public int insertCartNo(CartProdDTO cartProdDTO) throws Exception{
@@ -54,8 +54,8 @@ public class CartProdDAOImpl implements CartProdDAO {
      * @throws Exception DB 삽입 도중 발생할 수 있는 예외
      * @author min
      * @since  2023/07/03
-     * @updaAuthor soso
-     * @updDay  2023/07/25
+     * @modifier soso
+     * @modified  2023/07/25
      */
     @Override
     public int insertProductIntoCart(CartProdDTO cartProductDTO) throws Exception {
@@ -75,6 +75,20 @@ public class CartProdDAOImpl implements CartProdDAO {
     @Override
     public List<CartProdDTO> selectAll(int mbrId) throws Exception {
         return session.selectList(namespace + "selectAll", mbrId);
+    }
+
+    /**
+     * 주문할 장바구니 상품 목록을 가져온다.
+     *
+     * @param param HashMap 형태의 파라미터.
+     * @return 주문할 상품 정보를 담은 List
+     * @throws Exception DB 조회 도중 발생할 수 있는 예외
+     * @author min
+     * @since  2023/08/02
+     */
+    @Override
+    public List<CartProdDTO> selectOrderCartProd(Map<String, Object> param) throws Exception {
+        return session.selectList(namespace + "selectOrderCartProd", param);
     }
 
     /**

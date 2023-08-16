@@ -9,6 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -17,7 +22,7 @@ public class PayDAOImplTest {
     @Autowired
     PayDAO dao;
 
-    @Before
+//    @Before
     // 각 테스트 실행 전에 수행될 메서드. 기존 데이터를 모두 삭제한다.
     public void beforeEach() throws Exception {
         int result;
@@ -79,6 +84,21 @@ public class PayDAOImplTest {
         } catch (Exception e) {
             System.out.println("성공");
         }
+    }
+
+    @Test
+    public void insertCancelPayTest() throws Exception {
+        Map<String, Object> param = new HashMap<>();
+        param.put("ordNo", 117);
+        param.put("regrId", 80000);
+        param.put("payNo", null);
+
+        dao.insertCancelPay(param);
+
+        PayDTO payDTO = dao.selectPay((Integer) param.get("payNo"));
+        System.out.println("payDTO = " + payDTO);
+
+
     }
 
     @Test
@@ -168,5 +188,15 @@ public class PayDAOImplTest {
 
         dao.insertPay(pay);
         assertEquals(1, dao.countPay());
+    }
+
+    @Test
+    public void selectDailyTotalPayAmtTest() throws Exception {
+        List<Map<String, Object>> test = dao.selectDailyTotalPayAmt();
+
+        List<String> payDttmList = test.stream() .map(map -> (String) map.get("PAY_DTTM")) .collect(Collectors.toList());
+        List<Integer> totPayAmtList = test.stream() .map(map -> (Integer) map.get("TOT_PAY_AMT")) .collect(Collectors.toList());
+        System.out.println("test = " + test);
+
     }
 }

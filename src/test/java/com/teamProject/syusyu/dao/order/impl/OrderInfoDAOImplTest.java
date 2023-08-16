@@ -1,5 +1,6 @@
 package com.teamProject.syusyu.dao.order.impl;
 
+import com.teamProject.syusyu.dao.order.OrderInfoDAO;
 import com.teamProject.syusyu.domain.order.OrderInfoDTO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,5 +29,11 @@ public class OrderInfoDAOImplTest {
 //        System.out.println("list = " + list);
 
         param.forEach((k, y) -> System.out.println("key: " + k + " value: " + y));
+    }
+
+    @Test
+    public void countByOrdStusTest() throws Exception {
+        List<Map<String, Integer>> list = orderInfoDAO.countByOrdStus();
+        System.out.println("list = " + list);
     }
 }

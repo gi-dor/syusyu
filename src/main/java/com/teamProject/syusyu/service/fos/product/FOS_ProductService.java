@@ -7,13 +7,13 @@ import java.util.Map;
 
 public interface FOS_ProductService {
 
-    Map<String, Object> getProductList(int middleNo, int smallNo) throws Exception;
+    Map<String, Object> getProductList(int middleNo, int smallNo, String sort) throws Exception;
 
-    Map<String, Object> getProductAllList(int middleNo) throws Exception;
-
+    Map<String, Object> getProductAllList(int middleNo, String sort) throws Exception;
 
     List<ProductDTO> getProductStatus(int[] prodId) throws Exception;
 
     Map<String, Object> getProduct(int prodId) throws Exception;
 
+    Map<String,List<ProductDTO>> getDspyProductList() throws Exception;
 }

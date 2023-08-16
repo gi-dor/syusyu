@@ -2,6 +2,10 @@ namespace("orderSheet");
 orderSheet = {
     initLoad: () => {
         orderSheet.function.setFinalAmt();
+
+        // 전화번호 포매팅
+        formatPhoneNumberForElement('memberMpNoTxt');
+        formatPhoneNumberForElement('mpNoTxt');
     },
 
     bindButtonEvent: () => { // 버튼에 이벤트 핸들러를 연결
@@ -10,24 +14,49 @@ orderSheet = {
         const $addrChangeBtn = document.querySelector('#btn_addr_change'); // 배송지 변경 버튼
         const $couponSelectBtn = document.querySelector('#bnt_coupon_select'); // 배송지 변경 버튼
         const $pntUseAmtTxt = document.querySelector('#pntUseAmt'); // 포인트 사용 금액 입력창
+        const $dlvReqComt = document.querySelector('#dlvReqComt'); // 배송 요청사항 select box
 
         $paymentBtn.addEventListener('click', requestPay);
-        $payChoiceContainer.addEventListener('click', handlePaymentBtnClick);
+        $payChoiceContainer.addEventListener('click', orderSheet.eventHandler.handlePaymentBtnClick);
         $addrChangeBtn.addEventListener('click', orderSheet.eventHandler.openDlvAddrPopup);
         $couponSelectBtn.addEventListener('click', orderSheet.eventHandler.openCouponPopup);
         $pntUseAmtTxt.addEventListener('blur', orderSheet.eventHandler.pntUseChange);
+        $dlvReqComt.addEventListener('change', orderSheet.eventHandler.dlvReqComtChange);
 
     },
 };
 
 namespace("orderSheet.eventHandler"); // 이벤트 핸들러(특정 이벤트 발생 시 이벤트를 처리) 모음
 orderSheet.eventHandler = {
-    openDlvAddrPopup: () => {
+    dlvReqComtChange(e) {
+        const that = e.target;
+        that.style.color = 'rgb(51, 51, 51)';
+
+        document.querySelector(".input.w-450").style.display = e.target.selectedOptions[0].value === '직접입력' ? 'block' : 'none';
+    },
+
+    openDlvAddrPopup() {
         syusyu.common.Popup.openPopup('/fos/dlvAddrPopup');
     },
 
-    openCouponPopup: () => {
+    openCouponPopup() {
         syusyu.common.Popup.openPopup('/fos/couponPopup');
+    },
+
+    // 결제수단 버튼의 클릭 이벤트를 처리하는 함수
+    handlePaymentBtnClick(e) {
+        const that = e.target;
+
+        // 현재 클릭된 버튼에 'active' 클래스를 추가한다.
+        that.classList.add("active");
+
+        // 다른 버튼들은 'active' 클래스를 제거한다.
+        const $buttons = document.querySelectorAll(".pay-choice-btn"); // 결제수단 버튼
+        $buttons.forEach(btn => {
+            if (btn !== that) {
+                btn.classList.remove("active");
+            }
+        });
     },
 
     pntUseChange: (e) => {
@@ -47,8 +76,8 @@ namespace("orderSheet.function");
 orderSheet.function = {
     setFinalAmt: function () {
         // 1. 계산에 필요한 금액들을 가져온다.
-        // 1) 총 상품금액
-        const totProdAmt = parseInt(document.querySelector('#totProdAmt').value);
+        // 1) 총 할인적용금액
+        const totDcPrc = parseInt(document.querySelector('#totDcPrc').value);
         // 2) 총 배송비
         const dlvFee = parseInt(document.querySelector('#dlvFee').value);
         // 3) 쿠폰 할인
@@ -60,8 +89,8 @@ orderSheet.function = {
         document.querySelector('#paidCouponPriceTxt > strong').innerHTML = `-${formatPrice(couponDcAmt)}`;
         document.querySelector('#issueSmoneyTxt > strong').innerHTML = `-${formatPrice(pntUseAmt)}`;
 
-        // 2. 최종 결제금액을 계산한다. (총 상품금액 + 배송비 - 쿠폰 할인 - 포인트 사용)
-        const finalPayAmt = totProdAmt + dlvFee - couponDcAmt - pntUseAmt;
+        // 2. 최종 결제금액을 계산한다. (총 할인적용금액 + 배송비 - 쿠폰 할인 - 포인트 사용)
+        const finalPayAmt = totDcPrc + dlvFee - couponDcAmt - pntUseAmt;
 
         // 3. 화면에 금액을 보여준다.(단순 보여주기용)
         document.querySelector('#paidPriceTxt').innerHTML = `<strong>${formatPrice(finalPayAmt)}</strong>`;
@@ -71,20 +100,6 @@ orderSheet.function = {
         document.querySelector('#finalPayAmt').value = finalPayAmt;
     }
 };
-
-// 결제수단 버튼의 클릭 이벤트를 처리하는 함수
-const handlePaymentBtnClick = function () {
-    // 현재 클릭된 버튼에 'active' 클래스를 추가한다.
-    this.classList.add("active");
-
-    // 다른 버튼들은 'active' 클래스를 제거한다.
-    const $buttons = document.querySelectorAll(".pay-choice-btn"); // 결제수단 버튼
-    $buttons.forEach(btn => {
-        if (btn !== this) {
-            btn.classList.remove("active");
-        }
-    });
-}
 
 function requestPay() {
     const IMP = window.IMP;

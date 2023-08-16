@@ -23,15 +23,6 @@
         where NOTC_NO = #{notcNo}
     </delete>
 
-    <!--    <delete id="delete" parameterType="map">-->
-    <!--        DELETE-->
-    <!--        FROM notice-->
-    <!--        WHERE NOTC_NO = #{notcNo}-->
-    <!--          and REGR_ID = (select MBR_ID-->
-    <!--                         from member-->
-    <!--                         where LGIN_ID = #{lginId})-->
-    <!--    </delete>-->
-
 
     <!--        공지사항 등록 -->
     <insert id="insert" parameterType="NoticeDTO">
@@ -44,6 +35,7 @@
     <update id="update" parameterType="NoticeDTO">
         UPDATE notice
         SET TITLE    = #{title}
+          , NOTC_TP = #{notcTp}
           , CONTENT  = #{content}
           , UPD_DTTM = now()
           , START_DTTM = #{startDttm}
@@ -182,7 +174,8 @@
         SELECT TITLE, NOTC_NO
         FROM notice
         WHERE NOTC_NO &lt; #{notcNo}
-        ORDER BY NOTC_NO DESC LIMIT 1
+        ORDER BY NOTC_NO DESC
+        LIMIT 1
     </select>
 
     <!--        다음 공지사항 제목 번호 조회-->
@@ -190,14 +183,10 @@
         select TITLE, NOTC_NO
         from notice
         where NOTC_NO &gt; #{notcNo}
-        order by NOTC_NO asc LIMIT 1
+        order by NOTC_NO asc
+        LIMIT 1
     </select>
 
 
-    <!--    select title-->
-    <!--    from notice-->
-    <!--    where notc_no = (select notc_no-->
-    <!--                        from notice-->
-    <!--                    where notc_no = #{notc_no} -1)-->
 
 </mapper>

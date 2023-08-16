@@ -4,12 +4,7 @@ import java.util.Date;
 import java.util.Objects;
 
 public class ProdOptDTO {
-    //그룹 옵션
-    private int optGrpId;
-    private String optGrpNm;
 
-    //옵션항목
-    private int optItemId;
     private String optItemNm;
 
     //옵션조합번호
@@ -26,10 +21,11 @@ public class ProdOptDTO {
     private Date updDttm;
     private int updrId;
     private Date delDttm;
-    private int dertId;
+    private int delrId;
     private String delYn;
 
-    public ProdOptDTO(){}
+    public ProdOptDTO() {
+    }
 
     public ProdOptDTO(int optPrc, int optCombNo, int invQty, String shoesSize) {
         this.optPrc = optPrc;
@@ -38,42 +34,15 @@ public class ProdOptDTO {
         this.shoesSize = shoesSize;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ProdOptDTO that = (ProdOptDTO) o;
-        return optGrpId == that.optGrpId && optItemId == that.optItemId && optCombNo == that.optCombNo && optPrc == that.optPrc && invQty == that.invQty && prodId == that.prodId && regrId == that.regrId && updrId == that.updrId && dertId == that.dertId && Objects.equals(optGrpNm, that.optGrpNm) && Objects.equals(optItemNm, that.optItemNm) && Objects.equals(shoesSize, that.shoesSize) && Objects.equals(regDttm, that.regDttm) && Objects.equals(updDttm, that.updDttm) && Objects.equals(delDttm, that.delDttm) && Objects.equals(delYn, that.delYn);
+
+    public ProdOptDTO(int prodId, int regrId, int optCombNo, int optPrc, int invQty) {
+        this.prodId = prodId;
+        this.regrId = regrId;
+        this.optCombNo = optCombNo;
+        this.optPrc = optPrc;
+        this.invQty = invQty;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(optGrpId, optGrpNm, optItemId, optItemNm, optCombNo, optPrc, invQty, prodId, shoesSize, regDttm, regrId, updDttm, updrId, delDttm, dertId, delYn);
-    }
-
-    public int getOptGrpId() {
-        return optGrpId;
-    }
-
-    public void setOptGrpId(int optGrpId) {
-        this.optGrpId = optGrpId;
-    }
-
-    public String getOptGrpNm() {
-        return optGrpNm;
-    }
-
-    public void setOptGrpNm(String optGrpNm) {
-        this.optGrpNm = optGrpNm;
-    }
-
-    public int getOptItemId() {
-        return optItemId;
-    }
-
-    public void setOptItemId(int optItemId) {
-        this.optItemId = optItemId;
-    }
 
     public String getOptItemNm() {
         return optItemNm;
@@ -163,12 +132,12 @@ public class ProdOptDTO {
         this.delDttm = delDttm;
     }
 
-    public int getDertId() {
-        return dertId;
+    public int getDelrId() {
+        return delrId;
     }
 
-    public void setDertId(int dertId) {
-        this.dertId = dertId;
+    public void setDelrId(int delrId) {
+        this.delrId = delrId;
     }
 
     public String getDelYn() {
@@ -180,12 +149,22 @@ public class ProdOptDTO {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ProdOptDTO that = (ProdOptDTO) o;
+        return optCombNo == that.optCombNo && optPrc == that.optPrc && invQty == that.invQty && prodId == that.prodId && regrId == that.regrId && updrId == that.updrId && delrId == that.delrId && Objects.equals(optItemNm, that.optItemNm) && Objects.equals(shoesSize, that.shoesSize) && Objects.equals(regDttm, that.regDttm) && Objects.equals(updDttm, that.updDttm) && Objects.equals(delDttm, that.delDttm) && Objects.equals(delYn, that.delYn);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(optItemNm, optCombNo, optPrc, invQty, prodId, shoesSize, regDttm, regrId, updDttm, updrId, delDttm, delrId, delYn);
+    }
+
+    @Override
     public String toString() {
         return "ProdOptDTO{" +
-                "optGrpId=" + optGrpId +
-                ", optGrpNm='" + optGrpNm + '\'' +
-                ", optItemId=" + optItemId +
-                ", optItemNm='" + optItemNm + '\'' +
+                "optItemNm='" + optItemNm + '\'' +
                 ", optCombNo=" + optCombNo +
                 ", optPrc=" + optPrc +
                 ", invQty=" + invQty +
@@ -196,7 +175,7 @@ public class ProdOptDTO {
                 ", updDttm=" + updDttm +
                 ", updrId=" + updrId +
                 ", delDttm=" + delDttm +
-                ", dertId=" + dertId +
+                ", delrId=" + delrId +
                 ", delYn='" + delYn + '\'' +
                 '}';
     }

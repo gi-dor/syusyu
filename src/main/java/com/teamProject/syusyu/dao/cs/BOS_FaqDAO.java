@@ -21,7 +21,7 @@ public interface BOS_FaqDAO {
 
     int update(FaqDTO dto) throws Exception;
 
-    int delete(Integer faqNo, String regrId) throws Exception;
+    int delete(Integer faqNo, Integer regrId) throws Exception;
 
     int deleteAll() throws Exception;
 
@@ -35,7 +35,7 @@ public interface BOS_FaqDAO {
      *
      * @since  2023-07-25
      */
-    List<FaqDTO> searchSelectPage(SearchCondition sc) throws Exception;
+    List<FaqDTO> BosSearchSelectPage(SearchCondition sc) throws Exception;
 
-    int searchResultCnt(SearchCondition sc) throws Exception;
+    int BosSearchResultCnt(SearchCondition sc) throws Exception;
 }

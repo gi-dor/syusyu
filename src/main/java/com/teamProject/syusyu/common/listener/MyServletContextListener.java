@@ -10,6 +10,7 @@ public class MyServletContextListener implements ServletContextListener {
         ServletContext sc = sce.getServletContext();
         // 공통
         sc.setAttribute("jsUrlCommon", "/static/common/js");
+        sc.setAttribute("cssUrlCommon", "/static/common/css");
 
         // FOS
         sc.setAttribute("cssUrlFos", "/static/fos/css");
@@ -19,6 +20,7 @@ public class MyServletContextListener implements ServletContextListener {
         // BOS
         sc.setAttribute("cssUrlBos","/static/bos/css");
         sc.setAttribute("jsUrlBos", "/static/bos/js");
+        sc.setAttribute("summerNote","/static/bos/summernote");
 
         // tiles
         sc.setAttribute("title", "syusyu");

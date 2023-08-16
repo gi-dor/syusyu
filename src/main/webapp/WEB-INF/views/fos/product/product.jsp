@@ -10,23 +10,25 @@
 <head>
 
     <script src="${jsUrlFos}/product/product.js"></script>
+
+    <style>
+        @import url(${cssUrlFos}/product/FOS_Review.scss);
+    </style>
+
 </head>
-
-
 
 
     <div class="breadcrumb">
         <%--smallCategory--%>
         <div class="breadcrumb-inner">
-            <a href="/products">홈</a>
-            <a href="/products/${productDetail.middleNo}">${productDetail.middleNm}</a>
-            <a href="/products/${productDetail.middleNo}/${productDetail.smallNo}}">${productDetail.smallNm}</a>
+            <a href="/">홈</a>
+            <a href="/fos/products/${productDetail.middleNo}">${productDetail.middleNm}</a>
+            <a href="/fos/products/${productDetail.middleNo}/${productDetail.smallNo}}">${productDetail.smallNm}</a>
         </div>
     </div>
     <form id="frm_product" method="post">
 
         <div class="goods-detail-wrap">
-<%--            <input type="hidden" id="pdPrice" data-baseprice="3380.00" data-finalprice="3380.00" data-discrate="0">--%>
 
             <!-- 상품상세 상단-->
             <div class="inner-content">
@@ -64,7 +66,7 @@
                                             <div class="popup-layer">
                                                 <div class="popup-head">
                                                     <h4>공유하기</h4>
-                                                    <a href="javascript:void(0);" class="btn icon remove_19" data-btn="false">close</a>
+                                                    <button type="button" class="btn icon remove_19"><span class="text">close</span></button>
                                                 </div>
                                                 <div class="popup-content" data-type="share-box">
 
@@ -97,7 +99,7 @@
                             </div><!--//name-->
                             <div class="star-avg">
                                 <div class="avg-per">
-                                    <span class="star-per"><em style="width:100.0%;">평점</em></span>
+                                    <span class="star-per"><em style="width:${(productDetail.avgStarRating*100)/5}%;">평점</em></span>
                                     <span data-name="num">${productDetail.avgStarRating}</span>
                                     <a href="#goodsReview" class="txt">${productDetail.revwCnt}건</a>
                                 </div>
@@ -105,7 +107,7 @@
                             <div class="price">
                                 <c:choose>
                                     <c:when test="${productDetail.dcPer > 0}">
-                                        <div class="flex al-center"  data-price="${productDetail.dcPrc}>
+                                        <div class="flex al-center"  data-price="${productDetail.dcPrc}">
                                             <span class="per">${productDetail.dcPer}%</span>
                                             <fmt:formatNumber value="${productDetail.dcPrc}" pattern="#,###"/><span class="won">원</span>
                                         </div>
@@ -138,10 +140,23 @@
                                 <li class="flex">
                                     <span class="g-tit">적립정보</span>
                                     <span class="g-cont">
-                                        <span>로그인 후 적립혜택 제공
-                                            <em class="fw-7">0.5%</em>
-                                            (17 마일리지)
-                                        </span>
+                                        <c:choose>
+                                            <c:when test="${mbrId == null}">
+                                                <span>로그인 후 적립혜택 제공</span>
+                                            </c:when>
+                                            <c:otherwise>
+                                                    <em class="fw-7">1%</em>
+                                                    <c:choose>
+                                                        <c:when test="${productDetail.dcPer > 0}">
+                                                            (<fmt:formatNumber type="number" maxFractionDigits="0" value="${productDetail.dcPrc*0.01}" /> 마일리지)
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            (<fmt:formatNumber type="number" maxFractionDigits="0" value="${productDetail.salePrc*0.01}" /> 마일리지)
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </span>
+                                            </c:otherwise>
+                                        </c:choose>
                                     </span>
                                 </li>
                                 <li class="flex">
@@ -149,8 +164,7 @@
                                     <span class="g-cont">
                                         <span class="deli-info">
                                             <em class="fw-7">3,000</em>원
-<%--                                            <button type="button" class="btn ar-r icon mark tooltip-btn" onclick="bta.alert.open('.deliveryPopup');">--%>
-                                            <button type="button" class="btn ar-r icon mark tooltip-btn" onclick="openPopup()">
+                                            <button type="button" class="btn ar-r icon mark tooltip-btn">
                                                 <span class="ty2"></span>
                                             </button>
                                         </span>
@@ -165,8 +179,6 @@
                                 <li class="flex">
                                     <span class="g-tit pt-10">옵션선택</span>
                                     <span class="g-cont">
-
-
 											<div class="custom_select" type="general">
 												<div class="ui selection dropdown option-select" tabindex="0">
 													<input type="hidden" id="opt_picker_1_1" value="">
@@ -174,7 +186,7 @@
                                                     <div class="menu" tabindex="-1">
                                                         <c:forEach var="item" items="${shoesSizeList}">
                                                             <div class="item" data-value="${item.shoesSize}" data-opt-prc="${item.optPrc}" data-inv-qty="${item.invQty}" data-purchase-limit="${productDetail.dlvChgDtl}" data-opt-comb-no="${item.optCombNo}">
-                                                                <span>${item.shoesSize} ${item.optPrc != 0 ?'(+'+= item.optPrc+=')':''} </span>
+                                                                <span>${item.shoesSize} <c:if test="${item.optPrc != 0}">(+<fmt:formatNumber value="${item.optPrc}" pattern="#,###"/>)</c:if></span>
                                                             </div>
                                                         </c:forEach>
                                                     </div>
@@ -188,7 +200,7 @@
                             </ul><!--//goods-guide-->
                             <div class="total-price-area">
                                 <div class="total-price">
-                                    총금액${productDetail.cateId}
+                                    총금액
                                     <strong data-type="price">0</strong>
                                     <span class="color-1 ">원</span>
                                 </div>
@@ -196,9 +208,6 @@
                             <div class="btn-area">
                                 <input type="hidden" id="prod_no"  name="prodId" value="${productDetail.prodId}"/>
                                 <input type="hidden" id="prod_cate" name="cateId" value="${productDetail.cateId}"/>
-                                <input type="hidden" id="prod_sale_price" name="salePrc" value="${productDetail.salePrc}"/>
-                                <input type="hidden" id="prod_dc_per" name="dcPer" value="${productDetail.dcPer}"/>
-                                <input type="hidden" id="prod_dc_prc" name="dcPrc" value="${prodectDetail.dcPrc}"/>
                                 <input type="hidden" id="login_id" name="mbrId" value="${loginId}"/>
 
 
@@ -220,21 +229,21 @@
                     <div class="inner-content">
                         <ul class="tab-group-list ty2">
                             <li class="tab-menu">
-                                <a href="#" class="active">상세정보</a>
+                                <a href="prodDetail" class="active">상세정보</a>
                             </li>
                             <li class="tab-menu">
-                                <a href="#">상품후기 <span><em name="tab_review_size">${productDetail.revwCnt}</em></span></a>
+                                <a href="rwInfo">상품후기 <span><em name="tab_review_size">${productDetail.revwCnt}</em></span></a>
                             </li>
                             <li class="tab-menu">
-                                <a href="#">구매정보</a>
+                                <a href="purchaseInfo">구매정보</a>
                             </li>
                             <li class="tab-menu">
-                                <a href="#">상품문의 <span><em name="tab_qna_size">0</em></span></a>
+                                <a href="inquiryInfo">상품문의 <span><em name="tab_qna_size">0</em></span></a>
                             </li>
                         </ul><!--//tab-group-list-->
                     </div>
                 </div><!--//tab-group-list-wrap-->
-                <div class="goods-detail-con">
+                <div class="goods-detail-con" id="prodDetail">
                     <div class="inner-content move-container flex">
                         <div class="tab-group-cont content-mini left-case">
                             <!-- 상세정보 -->
@@ -249,10 +258,12 @@
                             <!-- 상품후기 -->
                             <div class="tab-cont goods-review" id="goodsReview">
                                 <section class="def-box" data-name="review">
+
                                     <div class="def-box-head mb-15">
                                         <h4 class="tit">상품후기</h4>
                                         <a href="javascript:" class="btn ty1 c-ty5" data-type="review_regist"><span>후기 작성하기</span></a>
                                     </div>
+
                                     <div class="def-box-content">
                                         <div class="star-avg">
                                             <div class="avg-per">
@@ -261,66 +272,126 @@
                                                 <p class="txt">총 <span name="tab_review_size">${productDetail.revwCnt}</span>건</p>
                                             </div>
                                         </div>
+
                                         <div class="sorting">
-								<span class="chkbox">
-									<label>
-										<input type="checkbox" class="chk-all" name="filter-photo">
-										<span class="text">포토후기만 보기</span>
-									</label>
-								</span>
+                                            <span class="chkbox">
+                                                <label>
+                                                    <input type="checkbox" class="chk-all" name="filter-photo">
+                                                    <span class="text">포토후기만 보기</span>
+                                                </label>
+                                            </span>
                                             <div class="tab ty3">
                                                 <a href="javascript:" class="active" combo-list-item="high">추천순</a>
                                                 <a href="javascript:" combo-list-item="new">최신순</a>
                                             </div>
                                         </div><!--//sorting-->
 
-                                        <div class="reviews-list-wrap" page-no="1" total-size="1" total-page="1" total-review="1" rating-avg="5.0" rating-star="5">
 
 
-                                            <div class="rev-list view-list" data-idx="1388">
-                                                <div class="rev-detail">
-                                                    <div class="star-per-wrap">
-                                                        <div class="star-per"><em style="width:100%;">평점</em></div>
-                                                        <p class="star-sc">5</p>
-                                                    </div>
-                                                    <div class="rev-info">
-                                                        <span class="writer"><em>작성자</em>rlaaud***</span>
-                                                        <span class="date"><em>날짜</em>2023.06.07</span>
-
-                                                    </div><!--//rev-info -->
-                                                    <div class="rev-cont">
-                                                        같이 온 작은 밥과 먹기 딱 좋은 양이에요!<br>봉지채 조리 가능해서 먹기 넘 편해요!<br>맛도 당연히 좋습니당
-
-                                                        <img src="https://ottogi-mall-s3.s3.ap-northeast-2.amazonaws.com/data/review/20230607/16861057723559Wxzi.jpeg" alt="">
-
-                                                    </div>
-                                                    <button type="button" class="review-more detail-more-btn" style="">더보기</button>
-                                                </div>
-
-                                                <div class="rev-photo">
-                                                    <div class="photo-list">
-                                                        <a href="#">
-                                                            <img src="https://ottogi-mall-s3.s3.ap-northeast-2.amazonaws.com/data/review/20230607/16861057723559Wxzi.jpeg" alt="">
-                                                        </a>
-                                                    </div>
-                                                    <span class="photo-amount"><em>1</em></span>
-                                                </div>
 
 
-                                            </div><!-- // rev-list -->
 
 
-                                        </div><!--//reviews-list-wrap--></div><!--//def-box-content-->
+<%--========================================================리뷰 리스트 start===============================================================--%>
+                                        <div class="reviews-list-wrap" id="rwInfo">
+                                            <!-- 상품 리뷰 정보를 반복문을 이용해서 생성 -->
+                                            <c:forEach var="reviewDTO" items="${reviewList}">
+                                                <div id="reviewList" class="rev-list view-list" data-idx="${reviewDTO.lginId}">
+                                                    <div class="rev-detail">
+                                                                <div id="rating-dttm">
+                                                                    <div class="star-per-wrap">
+                                                                        <div class="star-per"><em style="width:${reviewDTO.starRating * 20}%;">평점</em></div>
+                                                                        <p class="star-sc">${reviewDTO.starRating}</p>
+                                                                    </div>
+                                                                            <div class="rev-info" id="ReviewInfo">
+                                                                                <span class="writer"><em>작성자</em>${reviewDTO.lginId}</span>
+                                                                                <span class="shoeSize"><em>사이즈</em>${reviewDTO.shoeSize}</span>
+                                                                                <span class="date"><em>날짜</em><fmt:formatDate value="${reviewDTO.regDttm}" pattern="yyyy.MM.dd"/></span>
+                                                                            </div>
+                                                                </div>   <%--=== <div id="rating-dttm">====----%>
+
+
+                                                                     <div class="rev-cont" id="ReviewContent">${reviewDTO.revwCn}</div>
+                                                                    <!-- 이미지 정보가 있을 경우에만 생성 -->
+                                                                    <div id="reviewImg">
+                                                                        <c:if test="${not empty reviewDTO.imageList}">
+                                                                               <img src="${reviewDTO.imageList}">
+                                                                        </c:if>
+                                                                    </div>
+
+                                                    </div> <%--===  <div class="rev-detail">====----%>
+                                                </div>   <%--=== <div class="rev-list view-list"====----%>
+                                            </c:forEach>
+                                        </div>
+<%--========================================================리뷰 리스트 end===============================================================--%>
+
+
+
+
+
+
+<%--                                        <div class="reviews-list-wrap" page-no="1" total-size="1" total-page="1" total-review="1" rating-avg="5.0" rating-star="5">--%>
+
+
+<%--                                            <div class="rev-list view-list" data-idx="1388">--%>
+<%--                                                <div class="rev-detail">--%>
+<%--                                                    <div class="star-per-wrap">--%>
+<%--                                                        <div class="star-per"><em style="width:100%;">평점</em></div>--%>
+<%--                                                        <p class="star-sc">5</p>--%>
+<%--                                                    </div>--%>
+<%--                                                    <div class="rev-info">--%>
+<%--                                                        <span class="writer"><em>작성자</em>rlaaud***</span>--%>
+<%--                                                        <span class="date"><em>날짜</em>2023.06.07</span>--%>
+
+<%--                                                    </div><!--//rev-info -->--%>
+<%--                                                    <div class="rev-cont">--%>
+<%--                                                        같이 온 작은 밥과 먹기 딱 좋은 양이에요!<br>봉지채 조리 가능해서 먹기 넘 편해요!<br>맛도 당연히 좋습니당--%>
+
+<%--                                                        <img src="https://ottogi-mall-s3.s3.ap-northeast-2.amazonaws.com/data/review/20230607/16861057723559Wxzi.jpeg" alt="">--%>
+
+<%--                                                    </div>--%>
+<%--                                                    <button type="button" class="review-more detail-more-btn" style="">더보기</button>--%>
+<%--                                                </div>--%>
+
+<%--                                                <div class="rev-photo">--%>
+<%--                                                    <div class="photo-list">--%>
+<%--                                                        <a href="#">--%>
+<%--                                                            <img src="https://ottogi-mall-s3.s3.ap-northeast-2.amazonaws.com/data/review/20230607/16861057723559Wxzi.jpeg" alt="">--%>
+<%--                                                        </a>--%>
+<%--                                                    </div>--%>
+<%--                                                    <span class="photo-amount"><em>1</em></span>--%>
+<%--                                                </div>--%>
+
+
+<%--                                            </div><!-- // rev-list -->--%>
+
+
+<%--                                        </div><!--//reviews-list-wrap--></div><!--//def-box-content-->--%>
                                 </section>
 
                                 <div id="ux_review_regist" class="popup-wrap" active-popup="true"></div>
 
                             </div><!--// 상품후기 -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                             <!-- 구매정보 -->
                             <div class="tab-cont">
 
                                 <div class="fold-box">
-                                    <div class="fold-head">
+                                    <div class="fold-head"  id="purchaseInfo">
                                         <h6>상품 정보 고시</h6>
                                         <i class="icon icon-arr-b"></i>
                                     </div>
@@ -339,7 +410,7 @@
                                                 </tr>
 
                                                 <tr>
-                                                    <th>제품 소</th>
+                                                    <th>제품 소재</th>
                                                     <td>${productDetail.mfgdMatr}</td>
                                                 </tr>
 
@@ -355,12 +426,12 @@
 
                                                 <tr>
                                                     <th>제조자, 수입품의 경우 수입자를 함께 표기</th>
-                                                    <td>${productDetail.mftco}</td>
+                                                    <td>${productDetail.mftcoNm}</td>
                                                 </tr>
 
                                                 <tr>
                                                     <th>제조국</th>
-                                                    <td>${productDetail.mftNatn}</td>
+                                                    <td>${productDetail.mftNatnNm}</td>
                                                 </tr>
 
                                                 <tr>
@@ -385,7 +456,7 @@
 
                                                 <tr>
                                                     <th>A/S 책임자</th>
-                                                    <td>${productDetail.mftco}</td>
+                                                    <td>${productDetail.mftcoNm}</td>
                                                 </tr>
 
                                                 </tbody>
@@ -520,7 +591,7 @@
 
                             </div><!-- //구매정보 -->
                             <!-- 상품문의 -->
-                            <div class="tab-cont goods-qna">
+                            <div class="tab-cont goods-qna" id="inquiryInfo">
 
                                 <h4 class="tit">상품문의 <strong class="count color-1" name="tab_qna_size">0</strong></h4>
                                 <div class="qna-head flex space-between">
@@ -608,6 +679,11 @@
         </div><!--// goods-detail-wrap -->
     </form>
 
+    <!-- top버튼 -->
+    <button id="btnTop" class="top-btn"><i class="fas fa-arrow-up"></i></button>
+
+
+    <!--상품할인팝업-->
     <div class="popup-wrap discount-price-guide" active-popup="true">
         <div class="popup-layer w-430 pd-c-30">
             <div class="popup-head">
@@ -626,7 +702,7 @@
         </div>
     </div>
 
-<%--상품 배송 팝업--%>
+    <!--상품 배송 팝업-->
     <div class="popup-wrap deliveryPopup" active-popup="true">
         <div class="popup-layer w-430 pd-c-30">
             <div class="popup-head">
@@ -635,14 +711,25 @@
             </div>
             <div class="popup-content">
                 <div class="inner">
-                    <div class="mb-40" style="margin-top: 0px; margin-right: 0px; margin-left: 0px; box-sizing: border-box; border: 0px; padding: 0px; vertical-align: baseline; color: rgb(29, 29, 27); font-family: Pretendard, sans-serif; font-size: 16px; letter-spacing: -0.4px; background-color: rgb(255, 255, 255); margin-bottom: 40px !important;"><h6 class="popup-sub-tit" style="margin: 0px 0px 15px; box-sizing: border-box; border: 0px; padding: 0px; vertical-align: baseline; font-size: 18px; line-height: 21px; color: rgb(51, 51, 51);">무료배송 기준</h6><ul class="list ty3" style="margin: 0px; box-sizing: border-box; border: 0px; padding: 0px; vertical-align: baseline; list-style: none;"><li style="margin: 0px; box-sizing: border-box; border: 0px; padding: 0px 0px 0px 10px; vertical-align: baseline; position: relative; font-size: 15px; line-height: 20px; color: rgb(51, 51, 51);">상품 50,000원 이상 구매 시 무료배송</li><li style="margin: 3px 0px 0px; box-sizing: border-box; border: 0px; padding: 0px 0px 0px 10px; vertical-align: baseline; position: relative; font-size: 15px; line-height: 20px; color: rgb(51, 51, 51);">무료배송 상품 구매 시</li></ul></div><div class="mb-40" style="margin-top: 0px; margin-right: 0px; margin-left: 0px; box-sizing: border-box; border: 0px; padding: 0px; vertical-align: baseline; color: rgb(29, 29, 27); font-family: Pretendard, sans-serif; font-size: 16px; letter-spacing: -0.4px; background-color: rgb(255, 255, 255); margin-bottom: 40px !important;"><h6 class="popup-sub-tit mb-16" style="margin: 0px 0px 15px; box-sizing: border-box; border: 0px; padding: 0px; vertical-align: baseline; font-size: 18px; line-height: 21px; color: rgb(51, 51, 51);">배송 유형별 상품</h6><div class="tbl ty2 tbl-center" style="margin: 0px; box-sizing: border-box; border-width: 2px 0px 0px; border-top-style: solid; border-right-style: initial; border-bottom-style: initial; border-left-style: initial; border-top-color: rgb(51, 51, 51); border-right-color: initial; border-bottom-color: initial; border-left-color: initial; padding: 0px; border-image: initial; vertical-align: baseline;"><table class="__se_tbl_ext" style="margin: 0px; border-width: 0px; border-style: initial; border-color: inherit; padding: 0px; border-image: initial; vertical-align: baseline; table-layout: fixed; width: 350px; max-width: 100%; border-collapse: collapse; border-spacing: 0px;"><colgroup style="margin: 0px; box-sizing: border-box; border-width: 0px; border-style: solid; border-color: currentcolor;"><col style="width:120px; margin: 0px; box-sizing: border-box; border-width: 0px; border-style: solid; border-color: currentcolor;"><col style="width:auto; margin: 0px; box-sizing: border-box; border-width: 0px; border-style: solid; border-color: currentcolor;"></colgroup><tbody style="margin: 0px; box-sizing: border-box; border-width: 0px; border-style: solid; border-color: currentcolor;"><tr style="margin: 0px; box-sizing: border-box; border-width: 0px; border-style: solid; border-color: currentcolor;"><td class="fw-6" style="width:120px; margin: 0px; box-sizing: border-box; border-width: 0px 0px 1px; border-style: solid; border-color: currentcolor currentcolor rgb(238, 238, 238); font-weight: 600 !important; padding: 20px 0px; line-height: 24px;">상온 배송</td><td style="width:auto; margin: 0px; box-sizing: border-box; border-width: 0px 0px 1px; border-style: solid; border-color: currentcolor currentcolor rgb(238, 238, 238); padding: 20px 0px; line-height: 24px;"><ul class="list ty5" style="margin: 0px; box-sizing: border-box; border: 0px; padding: 0px; vertical-align: baseline; list-style: none;"><li class="etc-ty1" style="margin: 0px; box-sizing: border-box; border: 0px; padding: 0px 0px 0px 8px; vertical-align: baseline; position: relative; line-height: 29px; color: rgb(85, 85, 85);"><span class="color-1" style="margin: 0px; box-sizing: border-box; border: 0px; padding: 0px; vertical-align: baseline; color: rgb(211, 35, 58) !important;">실온</span>표기상품</li></ul></td></tr><tr style="margin: 0px; box-sizing: border-box; border-width: 0px; border-style: solid; border-color: currentcolor;"><td class="fw-6" style="width:120px; margin: 0px; box-sizing: border-box; border-width: 0px 0px 1px; border-style: solid; border-color: currentcolor currentcolor rgb(238, 238, 238); font-weight: 600 !important; padding: 20px 0px; line-height: 24px;">저온 배송</td><td style="width:auto; margin: 0px; box-sizing: border-box; border-width: 0px 0px 1px; border-style: solid; border-color: currentcolor currentcolor rgb(238, 238, 238); padding: 20px 0px; line-height: 24px;"><ul class="list ty5" style="margin: 0px; box-sizing: border-box; border: 0px; padding: 0px; vertical-align: baseline; list-style: none;"><li class="etc-ty1" style="margin: 0px; box-sizing: border-box; border: 0px; padding: 0px 0px 0px 8px; vertical-align: baseline; position: relative; line-height: 29px; color: rgb(85, 85, 85);"><span class="color-9" style="margin: 0px; box-sizing: border-box; border: 0px; padding: 0px; vertical-align: baseline; color: rgb(10, 48, 158) !important;">냉장·냉동</span>표기상품</li></ul></td></tr></tbody></table></div></div><div class="mb-40" style="margin-top: 0px; margin-right: 0px; margin-left: 0px; box-sizing: border-box; border: 0px; padding: 0px; vertical-align: baseline; color: rgb(29, 29, 27); font-family: Pretendard, sans-serif; font-size: 16px; letter-spacing: -0.4px; background-color: rgb(255, 255, 255); margin-bottom: 40px !important;"><h6 class="popup-sub-tit" style="margin: 0px 0px 15px; box-sizing: border-box; border: 0px; padding: 0px; vertical-align: baseline; font-size: 18px; line-height: 21px; color: rgb(51, 51, 51);">지역별 추가배송비</h6><ul class="list ty3" style="margin: 0px; box-sizing: border-box; border: 0px; padding: 0px; vertical-align: baseline; list-style: none;"><li style="margin: 0px; box-sizing: border-box; border: 0px; padding: 0px 0px 0px 10px; vertical-align: baseline; position: relative; font-size: 15px; line-height: 20px; color: rgb(51, 51, 51);">도서 산간 지역 추가 배송비 5,000원</li><li style="margin: 3px 0px 0px; box-sizing: border-box; border: 0px; padding: 0px 0px 0px 10px; vertical-align: baseline; position: relative; font-size: 15px; line-height: 20px; color: rgb(51, 51, 51);">제주 지역 추가 배송비 5,000원</li></ul></div><div style="margin: 0px; box-sizing: border-box; border: 0px; padding: 0px; vertical-align: baseline; background-color: rgb(255, 255, 255);"><h6 class="popup-sub-tit" style="font-family: Pretendard, sans-serif; letter-spacing: -0.4px; color: rgb(51, 51, 51); font-size: 18px; margin: 0px 0px 15px; box-sizing: border-box; border: 0px; padding: 0px; vertical-align: baseline; line-height: 21px;">배송기간</h6><ul class="list ty3" style="font-family: Pretendard, sans-serif; letter-spacing: -0.4px; color: rgb(29, 29, 27); font-size: 16px; margin: 0px; box-sizing: border-box; border: 0px; padding: 0px; vertical-align: baseline; list-style: none;"></ul><div style="font-family: Pretendard, sans-serif; letter-spacing: -0.4px;"><font color="#333333"><span style="font-size: 15px;"><br></span></font></div><div style="font-family: Pretendard, sans-serif; letter-spacing: -0.4px;"><font color="#333333"><span style="font-size: 15px;"></span></font></div><h6 class="popup-sub-tit" style="font-family: Pretendard, sans-serif; letter-spacing: -0.4px; color: rgb(51, 51, 51); font-size: 18px; margin: 0px 0px 15px; box-sizing: border-box; border: 0px; padding: 0px; vertical-align: baseline; line-height: 21px;">택배사</h6><ul class="list ty3" style="margin: 0px; box-sizing: border-box; border: 0px; padding: 0px; vertical-align: baseline; list-style: none;"><li style="color: rgb(51, 51, 51); font-family: Pretendard, sans-serif; font-size: 15px; letter-spacing: -0.4px; margin: 0px; box-sizing: border-box; border: 0px; padding: 0px 0px 0px 10px; vertical-align: baseline; position: relative; line-height: 20px;">CJ대한통운</li><li style="color: rgb(51, 51, 51); font-family: Pretendard, sans-serif; font-size: 15px; letter-spacing: -0.4px; margin: 0px; box-sizing: border-box; border: 0px; padding: 0px 0px 0px 10px; vertical-align: baseline; position: relative; line-height: 20px;">배송조회 및 문의는 마이페이지 &gt; 주문배송조회 또는 1588-1255(CJ대한통운)에서 가능합니다.&ZeroWidthSpace; 단 당사의 사정에 따라 택배사는 변경될 수 있습니다.&ZeroWidthSpace;&ZeroWidthSpace;</li></ul><div style="font-family: Pretendard, sans-serif; letter-spacing: -0.4px;"></div><div style="font-family: Pretendard, sans-serif; letter-spacing: -0.4px;"><span style="color: rgb(51, 51, 51); font-size: 15px; letter-spacing: -0.4px;"></span></div></div>
+                    <div class="mb-40" style="margin-top: 0px; margin-right: 0px; margin-left: 0px; box-sizing: border-box; border: 0px; padding: 0px; vertical-align: baseline; color: rgb(29, 29, 27); font-family: Pretendard, sans-serif; font-size: 16px; letter-spacing: -0.4px; background-color: rgb(255, 255, 255); margin-bottom: 40px !important;">
+                        <h6 class="popup-sub-tit" style="margin: 0px 0px 15px; box-sizing: border-box; border: 0px; padding: 0px; vertical-align: baseline; font-size: 18px; line-height: 21px; color: rgb(51, 51, 51);">무료배송 기준</h6>
+                        <ul class="list ty3" style="margin: 0px; box-sizing: border-box; border: 0px; padding: 0px; vertical-align: baseline; list-style: none;">
+                            <li style="margin: 0px; box-sizing: border-box; border: 0px; padding: 0px 0px 0px 10px; vertical-align: baseline; position: relative; font-size: 15px; line-height: 20px; color: rgb(51, 51, 51);">상품 50,000원 이상 구매 시 무료배송</li>
+                            <li style="margin: 3px 0px 0px; box-sizing: border-box; border: 0px; padding: 0px 0px 0px 10px; vertical-align: baseline; position: relative; font-size: 15px; line-height: 20px; color: rgb(51, 51, 51);">무료배송 상품 구매 시</li>
+                        </ul>
+                    </div>
+                    <div class="mb-40" style="margin-top: 0px; margin-right: 0px; margin-left: 0px; box-sizing: border-box; border: 0px; padding: 0px; vertical-align: baseline; color: rgb(29, 29, 27); font-family: Pretendard, sans-serif; font-size: 16px; letter-spacing: -0.4px; background-color: rgb(255, 255, 255); margin-bottom: 40px !important;"><h6 class="popup-sub-tit" style="margin: 0px 0px 15px; box-sizing: border-box; border: 0px; padding: 0px; vertical-align: baseline; font-size: 18px; line-height: 21px; color: rgb(51, 51, 51);">지역별 추가배송비</h6><ul class="list ty3" style="margin: 0px; box-sizing: border-box; border: 0px; padding: 0px; vertical-align: baseline; list-style: none;"><li style="margin: 0px; box-sizing: border-box; border: 0px; padding: 0px 0px 0px 10px; vertical-align: baseline; position: relative; font-size: 15px; line-height: 20px; color: rgb(51, 51, 51);">도서 산간 지역 추가 배송비 3,000원</li><li style="margin: 3px 0px 0px; box-sizing: border-box; border: 0px; padding: 0px 0px 0px 10px; vertical-align: baseline; position: relative; font-size: 15px; line-height: 20px; color: rgb(51, 51, 51);">제주 지역 추가 배송비 3,000원</li></ul></div><div style="margin: 0px; box-sizing: border-box; border: 0px; padding: 0px; vertical-align: baseline; background-color: rgb(255, 255, 255);"><h6 class="popup-sub-tit" style="font-family: Pretendard, sans-serif; letter-spacing: -0.4px; color: rgb(51, 51, 51); font-size: 18px; margin: 0px 0px 15px; box-sizing: border-box; border: 0px; padding: 0px; vertical-align: baseline; line-height: 21px;">배송기간</h6><ul class="list ty3" style="font-family: Pretendard, sans-serif; letter-spacing: -0.4px; color: rgb(29, 29, 27); font-size: 16px; margin: 0px; box-sizing: border-box; border: 0px; padding: 0px; vertical-align: baseline; list-style: none;"><li style="margin: 3px 0px 0px; box-sizing: border-box; border: 0px; padding: 0px 0px 0px 10px; vertical-align: baseline; position: relative; font-size: 15px; line-height: 20px; color: rgb(51, 51, 51);">평균 배송일은 연휴 및 공휴일을 제외한 영업일 기준, 입금/결제 확인 후 2일~4일입니다.</li></ul><div style="font-family: Pretendard, sans-serif; letter-spacing: -0.4px;"><font color="#333333"><span style="font-size: 15px;"><br></span></font></div><div style="font-family: Pretendard, sans-serif; letter-spacing: -0.4px;"><font color="#333333"><span style="font-size: 15px;"></span></font></div><h6 class="popup-sub-tit" style="font-family: Pretendard, sans-serif; letter-spacing: -0.4px; color: rgb(51, 51, 51); font-size: 18px; margin: 0px 0px 15px; box-sizing: border-box; border: 0px; padding: 0px; vertical-align: baseline; line-height: 21px;">택배사</h6><ul class="list ty3" style="margin: 0px; box-sizing: border-box; border: 0px; padding: 0px; vertical-align: baseline; list-style: none;"><li style="color: rgb(51, 51, 51); font-family: Pretendard, sans-serif; font-size: 15px; letter-spacing: -0.4px; margin: 0px; box-sizing: border-box; border: 0px; padding: 0px 0px 0px 10px; vertical-align: baseline; position: relative; line-height: 20px;">CJ대한통운</li><li style="color: rgb(51, 51, 51); font-family: Pretendard, sans-serif; font-size: 15px; letter-spacing: -0.4px; margin: 0px; box-sizing: border-box; border: 0px; padding: 0px 0px 0px 10px; vertical-align: baseline; position: relative; line-height: 20px;">배송조회 및 문의는 마이페이지 &gt; 주문배송조회 또는 1588-1255(CJ대한통운)에서 가능합니다.&ZeroWidthSpace; 단 당사의 사정에 따라 택배사는 변경될 수 있습니다.&ZeroWidthSpace;&ZeroWidthSpace;</li></ul><div style="font-family: Pretendard, sans-serif; letter-spacing: -0.4px;"></div><div style="font-family: Pretendard, sans-serif; letter-spacing: -0.4px;"><span style="color: rgb(51, 51, 51); font-size: 15px; letter-spacing: -0.4px;"></span></div></div>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- 토스트 팝업 -->
+    <div class="popup-toast">
+        <div class="popup-toast-content"></div>
+    </div>
 
-    <!-- 상품 정보 팝업 -->
+    <%-- 상품 정보 팝업 --%>
     <div class="popup-wrap" id="prd-pick-detail" active-popup="true">
         <div class="popup-layer w-910">
             <div class="popup-head">
@@ -656,13 +743,13 @@
     </div>
 
 
-    <!-- 상품 옵션 팝업 -->
+    <%-- 상품 옵션 팝업 --%>
     <div class="popup-wrap" id="prd-opt-popup"></div>
 
-    <!-- 재고알림 신청 팝업 -->
+    <%-- 재고알림 신청 팝업 --%>
     <div class="popup-wrap" id="prd-alarm-popup" active-popup="true"></div>
 
-    <!-- 비밀번호 변경 안내 -->
+    <%-- 비밀번호 변경 안내 --%>
     <div class="popup-wrap" id="updatePwPopup" active-popup="true">
         <div class="popup-layer w-510">
             <div class="popup-head">
@@ -681,13 +768,13 @@
                 </div>
             </div>
             <div class="popup-btn-area">
-                <a href="https://www.ottogimall.co.kr/front" class="btn popup-btn ty4 c-ty8 delayPwReset" userno="352012"><span>다음에</span></a>
-                <a href="https://www.ottogimall.co.kr/front/mypage/my_modify" class="btn popup-btn ty4 c-ty9 pwReset"><span>변경하기</span></a>
+                <a href="#" class="btn popup-btn ty4 c-ty8 delayPwReset" userno="352012"><span>다음에</span></a>
+                <a href="#" class="btn popup-btn ty4 c-ty9 pwReset"><span>변경하기</span></a>
             </div>
         </div>
     </div>
 
-    <!-- 약관 안내 -->
+    <%-- 약관 안내 --%>
     <div class="popup-wrap" id="termPopup" active-popup="true">
         <div class="popup-layer w-910">
             <div class="popup-head">
@@ -707,7 +794,7 @@
         </div>
     </div>
 
-    <!-- 공통 팝업 -->
+    <%-- 공통 팝업 --%>
     <div class="popup-wrap popup-alert">
         <div class="popup-layer w-360">
             <div class="popup-content"></div>
@@ -721,7 +808,3 @@
         </div>
     </div>
 
-    <!-- 토스트 팝업 -->
-    <div class="popup-toast">
-        <div class="popup-toast-content"></div>
-    </div>

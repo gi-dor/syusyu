@@ -1,12 +1,19 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<script src="<c:url value="${jsUrlFos}/cs/mypage/orderDetail.js"/>"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        orderDetail.initLoad();
+        orderDetail.bindButtonEvent();
+    });
+</script>
 <section class="mt-60"><!-- 주문 상품 내역 -->
     <form name="FrmOrder" id="frm_order" method="post" action="order.act">
         <input type="hidden" name="mnu" value="delivery">
         <input type="hidden" name="cmd">
         <input type="hidden" name="idx" value="39796">
-        <input type="hidden" name="redirect" value="https://www.ottogimall.co.kr/front/mypage/order_delivery">
+        <input type="hidden" name="redirect" value="#">
         <input type="hidden" name="params" value="sdts=2023-06-21&amp;sdte=2023-07-21&amp;page=0">
         <div class="sub-content-head etc-ty2 mb-30">
             <div class="inner">
@@ -32,7 +39,33 @@
                         </div>
                         <div class="order-info">
                             <div class="badge-cont">
-                                <span class="badge-item ty11 fw-7">${orderDetail.ordStusNm}</span>
+                                <c:choose>
+                                    <c:when test="${orderDetail.ordStus == 10}">
+                                        <span class="badge-item ty13 fw-7">결제완료</span>
+                                    </c:when>
+                                    <c:when test="${orderDetail.ordStus == 20}">
+                                        <span class="badge-item ty12 fw-7">상품준비중</span>
+                                    </c:when>
+                                    <c:when test="${orderDetail.ordStus == 30 || orderDetail.ordStus == 40 || orderDetail.ordStus == 50}">
+                                        <span class="badge-item ty13 fw-7">배송중</span>
+                                    </c:when>
+                                    <c:when test="${orderDetail.ordStus == 60}">
+                                        <span class="badge-item ty13 fw-7">배송완료</span>
+                                    </c:when>
+                                    <c:when test="${orderDetail.ordStus == 70}">
+                                        <span class="badge-item ty11 fw-7">주문취소</span>
+                                    </c:when>
+                                    <c:when test="${orderDetail.ordStus == 80}">
+                                        <span class="badge-item ty11 fw-7">반품</span>
+                                    </c:when>
+                                    <c:when test="${orderDetail.ordStus == 90}">
+                                        <span class="badge-item ty11 fw-7">교환</span>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <span class="badge-item unknown fw-7">알 수 없는 상태</span>
+                                    </c:otherwise>
+                                </c:choose>
+
                             </div>
                             <p class="name">${orderDetail.prodNm}</p>
                             <div class="option">${orderDetail.optNm}</div>
@@ -42,8 +75,10 @@
                             </div>
                         </div>
                         <div class="btn-area" data-name="state-btns">
-                            <a href="#" class="btn ty1 c-ty6 w-90" cmd="claim" claim="100"
-                               paids="1"><span>주문취소</span></a>
+                            <!-- 주문상태가 10(결제완료)일 경우에만 주문취소 가능 -->
+                            <c:if test="${orderDetail.ordStus == '10'}">
+                                <a href="/fos/orders/${orderDetail.ordNo}/cancel-view" class="btn ty1 c-ty6 w-90" cmd="claim" claim="100" paids="1"><span>주문취소</span></a>
+                            </c:if>
                         </div>
                     </div>
                 </c:forEach>
@@ -83,7 +118,7 @@
             </tr>
             <tr>
                 <th>연락처</th>
-                <td>${ordDlvAddr.mpNo}</td>
+                <td id="mpNo">${ordDlvAddr.mpNo}</td>
             </tr>
             <tr>
                 <th>배송 요청사항</th>
@@ -174,5 +209,5 @@
 </section>
 <!-- // 결제정보 -->
 <div class="btn-area mt-40">
-    <a href="https://www.ottogimall.co.kr/front/mypage/cs_inquiry" class="btn ty4 c-ty2"><span>1:1 문의</span></a>
+    <a href="#" class="btn ty4 c-ty2"><span>1:1 문의</span></a>
 </div>

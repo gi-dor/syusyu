@@ -101,7 +101,7 @@
 
             <table class="table table-hover">
 
-                <tr class="table-dark">
+                <tr id="id-Table-dark" class="table-dark">
                     <th scope="col">번호</th>
                     <th scope="col">공지사항 종류</th>
                     <th scope="col">제목</th>
@@ -178,7 +178,7 @@
 
                             <%--                    <td> <input class="" type="button" value="수정"> </td>--%>
                         <td><button type="button" id="modifyBtn" class="modifyBtn" data-notc-no="${noticeDTO.notcNo}">수정</button></td>
-                        <td><button type="button" id="removeBtn" class="removeBtn">삭제</button></td>
+                        <td><button type="button" id="removeBtn" class="removeBtn" data-notc-no="${noticeDTO.notcNo}">삭제</button></td>
                     </tr>
                 </c:forEach>
 
@@ -204,7 +204,7 @@
                     <c:if test="${ph.totalCnt!=null && ph.totalCnt!=0}">
 
                         <c:if test="${ph.showFirst}">
-                            <a class="page" href="<c:url value='/adminNotice/list${ph.sc.getQueryString(ph.beginPage)}'/>"><i class="fa-solid fa-angles-left"></i></a>
+                            <a class="page" href="<c:url value='/adminNotice/list${ph.sc.getQueryString(1)}'/>"><i class="fa-solid fa-angles-left"></i></a>
                         </c:if>
 
                         <c:if test="${ph.showPrev}">
@@ -241,7 +241,8 @@
             $('.removeBtn').on("click", function(){
                 if(!confirm("삭제 하시겠습니까 ?")) return;
                 let form =  $('#form');
-                let url =  "<c:url value='/adminNotice/remove${searchCondition.queryString}'/>";
+                const notcNo=$(this).data("notc-no");
+                let url =  '/adminNotice/remove?notcNo=' + notcNo;
                 form.attr("action", url);
                 form.attr("method", "post");
                 form.submit();
@@ -256,7 +257,7 @@
 
             $(".modifyBtn").on("click", function () {
                 const notcNo=$(this).data("notc-no");
-                location.href = '/adminNotice/modify?notcNo='+notcNo;
+                location.href = '/adminNotice/modify?notcNo= ' +notcNo;
             });
                 <%--location.href = '/adminNotice/modify?notcNo=${noticeDTO.notcNo}';--%>
 

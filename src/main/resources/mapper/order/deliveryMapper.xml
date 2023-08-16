@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.teamProject.syusyu.deliveryMapper">
+    <insert id="insertDelivery" parameterType="DeliveryDTO" useGeneratedKeys="true" keyProperty="dlvNo">
+        INSERT INTO DELIVERY ( ORD_DTL_NO # 주문상세번호
+                             , DLV_STUS # 배송상태
+                             , DLV_TP # 배송방법
+                             , DISPATCH_DTTM # 발송처리일시
+                             , DLV_COM # 택배사
+                             , TRCK_NO # 송장번호
+                             , REG_ID) # 등록자
+        VALUES ( #{ordDtlNo}
+               , 10 # 발송완료
+               , 10 # 배송방법(10 = 택배, 등기, 소포)
+               , now()
+               , #{dlvCom}
+               , #{trckNo}
+               , #{regId});
+    </insert>
+
+    <select id="selectDelivery" parameterType="int" resultType="DeliveryDTO">
+        SELECT D.DLV_NO
+             , D.ORD_DTL_NO
+             , D.DISPATCH_DTTM                           # 발송처리일시
+             , D.PICKUP_DTTM                             # 집화처리일시
+             , D.SHMT_DTTM                               # 출하일시
+             , D.DLV_COM                                 # 택배사코드
+             , GET_CD_NM('O0011', DLV_COM) AS DLV_COM_NM # 택배사명
+             , D.TRCK_NO                                 # 송장번호
+             , D.CMPL_DTTM                               # 배송완료일시
+        FROM DELIVERY D
+        WHERE ORD_DTL_NO = #{ordDtlNo}
+    </select>
+
+    <update id="updateDelivery" parameterType="DeliveryDTO">
+        UPDATE DELIVERY
+        SET ORD_DTL_NO = #{ordDtlNo}
+          , DLV_STUS = #{dlvStus}
+          , DLV_TP = #{dlvTp}
+          , DISPATCH_DTTM = #{dispatchDttm}
+          , PICKUP_DTTM = #{pickupDttm}
+          , SHMT_DTTM = #{shmtDttm}
+          , CMPL_DTTM = #{cmplDttm}
+          , DLV_COM = #{dlvCom}
+          , TRCK_NO = #{trckNo}
+          , UPD_DTTM = now()
+          , UPD_ID = #{updId}
+        WHERE DLV_NO = #{dlvNo}
+    </update>
+
+    <delete id="deleteAllDelivery">
+        DELETE
+        FROM DELIVERY
+    </delete>
+
+    <select id="countDelivery" resultType="int">
+        SELECT COUNT(*)
+        FROM DELIVERY
+    </select>
+
+    <select id="selectAllDelivery" resultType="DeliveryDTO">
+        SELECT *
+        FROM DELIVERY
+    </select>
+</mapper>

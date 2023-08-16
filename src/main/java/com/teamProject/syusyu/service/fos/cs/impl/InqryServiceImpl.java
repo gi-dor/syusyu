@@ -49,7 +49,6 @@ public class InqryServiceImpl implements InqryService {
     @Override
     public InqryDTO read(Integer inqryNo) throws Exception {
         InqryDTO inqryDTO = inqryDAO.select(inqryNo);
-
         return inqryDTO;
     }
 
@@ -61,6 +60,11 @@ public class InqryServiceImpl implements InqryService {
     @Override
     public int modify(InqryDTO inqryDTO) throws Exception {
         return inqryDAO.update(inqryDTO);
+    }
+
+    @Override
+    public int modifyAnswerOnly(InqryDTO inqryDTO) {
+        return inqryDAO.updateAnswer(inqryDTO);
     }
 
     @Override

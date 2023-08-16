@@ -1,5 +1,6 @@
 package com.teamProject.syusyu.dao.cs.impl;
 
+import com.teamProject.syusyu.dao.cs.BOS_FaqDAO;
 import com.teamProject.syusyu.domain.cs.FaqDTO;
 import com.teamProject.syusyu.domain.cs.SearchCondition;
 import org.apache.ibatis.session.SqlSession;
@@ -11,13 +12,13 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public class BOS_FaqDAOImpl implements com.teamProject.syusyu.dao.cs.BOS_FaqDAO {
+public class BOS_FaqDAOImpl implements BOS_FaqDAO {
 
 
     @Autowired
     SqlSession session;
 
-    String namespace = "com.teamProject.syusyu.FaqMapper.";
+    String namespace = "com.teamProject.syusyu.BOS_FaqMapper.";
 
     @Override
     public FaqDTO select(Integer faqNo) throws Exception{
@@ -56,7 +57,7 @@ public class BOS_FaqDAOImpl implements com.teamProject.syusyu.dao.cs.BOS_FaqDAO 
 
 
     @Override
-    public int delete(Integer faqNo, String regrId) throws Exception{
+    public int delete(Integer faqNo, Integer regrId) throws Exception{
         Map map = new HashMap();
         map.put("faqNo",faqNo);
         map.put("regrId",regrId);
@@ -76,15 +77,15 @@ public class BOS_FaqDAOImpl implements com.teamProject.syusyu.dao.cs.BOS_FaqDAO 
 
 
     @Override
-    public List<FaqDTO> searchSelectPage(SearchCondition sc) throws Exception{
-        List<FaqDTO> test = session.selectList(namespace+"searchSelectPage", sc);
+    public List<FaqDTO> BosSearchSelectPage(SearchCondition sc) throws Exception{
+        List<FaqDTO> test = session.selectList(namespace+"BosSearchSelectPage", sc);
         System.out.println("BOS_FaqLIST = " + test);
         return test;
     }
 
     @Override
-    public int searchResultCnt(SearchCondition sc) throws Exception{
-        return session.selectOne(namespace+"searchResultCnt", sc);
+    public int BosSearchResultCnt(SearchCondition sc) throws Exception{
+        return session.selectOne(namespace+"BosSearchResultCnt", sc);
     }
 
 

@@ -18,4 +18,16 @@
           AND PO.DEL_YN = 'N'
         ORDER BY OI.OPT_ITEM_NM
     </select>
+    <insert id="insertProdOpt" parameterType="ProdOptDTO" useGeneratedKeys="true" keyProperty="optCombNo">
+        INSERT INTO PROD_OPT (PROD_ID
+                             , OPT_PRC  /* 옵션가 */
+                             , INV_QTY  /* 재고수량 */
+                             , REGR_ID)
+        VALUES (#{prodId}
+               , #{optPrc}
+               , #{invQty}
+               , #{regrId} );
+    </insert>
 </mapper>
+
+

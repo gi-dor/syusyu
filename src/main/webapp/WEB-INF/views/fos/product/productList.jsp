@@ -5,24 +5,64 @@
 <c:set var="categories" value="${sessionScope.categories}"/>
 <head>
     <script src="<c:url value='${jsUrlFos}/product/productList.js'/>"></script>
+    <style>
+        .star-rating {
+            position: relative;
+            display: inline-block;
+        }
+
+        .star-rating span {
+            font-size: 20px;  // 원하는 크기로 조절
+        }
+
+        .star-rating .star-rating-top {
+            color: black;  // 원하는 색상으로 조절
+        position: absolute;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .star-rating .star-rating-bottom {
+            color: lightgrey;  // 원하는 색상으로 조절
+        z-index: 0;
+        }
+    </style>
 </head>
 
 
 <div class="breadcrumb">
     <div class="breadcrumb-inner">
-        <a href="<c:url value='/fos/products?middleNo=1&smallNo=1'/>">신발</a>
+        <a href="<c:url value='/'/>">홈</a>
 
         <%--   추후 카테고리 삽입하면 경로바꿀 예정임   --%>
-        <a href="<c:url value='/fos/products/${middleNo}'/>">운동화</a>
+        <a href="<c:url value='/fos/products/${middleNo}'/>">${categories.middleCategories.get(middleNo)}</a>
 
-        <%--<a href="javascript:">스니커즈</a>--%>
-        <a href="#">스니커즈</a>
+        <c:choose>
+            <c:when test="${empty smallNo}">
+                <a href="<c:url value='/fos/products/${middleNo}'/>">전체</a>
+            </c:when>
+            <c:otherwise>
+                <a href="#">${categories.smallCategories.get(middleNo).get(smallNo)}</a>
+            </c:otherwise>
+        </c:choose>
+
 
     </div>
 </div>
 <div class="content-title">
     <div class="inner-content">
-        <h2 class="title-t ty2">스니커즈</h2>
+        <h2 class="title-t ty2">
+            <c:choose>
+                <c:when test="${empty smallNo}">
+                    ${categories.middleCategories.get(middleNo)}
+                </c:when>
+                <c:otherwise>
+                    ${categories.smallCategories.get(middleNo).get(smallNo)}
+                </c:otherwise>
+            </c:choose>
+
+
+        </h2>
     </div>
 </div>
 
@@ -31,13 +71,12 @@
         <div class="tab ty1">
             <div class="inner">
                 <a href="<c:url value='/fos/products/${middleNo}'/>" class="allCategory">전체</a>
-                <%--                <c:out value="${middleNo}"/>--%>
-                <%--                <c:out value="${smallNo}"/>--%>
                 <c:forEach var="small" items="${categories.smallCategories}">
                     <c:if test="${small.key == middleNo}">
                         <c:forEach var="smallCategoryItem" items="${small.value}">
 
-                            <a href="<c:url value='/fos/products/${small.key}/${smallCategoryItem.key}'/>" class ="smallCategory" data-category-name="${smallCategoryItem.value}">
+                            <a href="<c:url value='/fos/products/${small.key}/${smallCategoryItem.key}'/>"
+                               class="smallCategory" data-category-name="${smallCategoryItem.value}">
                                 <c:out value="${smallCategoryItem.value}"/>
                             </a>
 
@@ -52,21 +91,25 @@
             <div class="content-top">
                 <span class="prd-counter">전체 <strong></strong>개</span>
                 <div class="r-side">
-                    <div class="tab ty3">
-                        <a href="#" class="active" name="pop">인기순</a>
-                        <a href="#" name="new">신제품순</a>
-                        <a href="#" name="disc">할인순</a>
-                        <a href="#" name="lowp">낮은가격순</a>
-                        <a href="#" name="highp">높은가격순</a>
+                    <div class="tab ty3" id="sort">
+                        <a href="#" id="newArrival" class="active">신제품순</a>
+                        <a href="#" id="lowPrice">낮은가격순</a>
+                        <a href="#" id="highPrice">높은가격순</a>
+                        <a href="#" id="discount">할인순</a>
+                        <a href="#" id="popularity">인기순</a>
+                        <a href="#" id="reviewCount">리뷰순</a>
+                        <a href="#" id="ratingCount">평점많은순</a>
+                        <a href="#" id="buyCount">구매순</a>
                     </div>
-                    <div class="r-side-items">
-                        <select name="pageSize" id="pageSize" class="selectbox ty2">
-                            <option value="40">40개</option>
-                            <option value="60">60개</option>
-                            <option value="80" selected="">80개</option>
-                            <option value="100">100개</option>
-                        </select>
-                    </div>
+
+<%--                    <div class="r-side-items">--%>
+<%--                        <select name="pageSize" id="pageSize" class="selectbox ty2">--%>
+<%--                            <option value="40">40개</option>--%>
+<%--                            <option value="60">60개</option>--%>
+<%--                            <option value="80" selected="">80개</option>--%>
+<%--                            <option value="100">100개</option>--%>
+<%--                        </select>--%>
+<%--                    </div>--%>
                     <div class="r-side-items">
                         <button type="button" class="btn icon change-list" id="listBtn"><span class="text">앨범/리스트</span>
                         </button>
@@ -84,4 +127,5 @@
         </div>
     </div>
 </div>
-
+<!-- top버튼 -->
+<button id="btnTop" class="top-btn"><i class="fas fa-arrow-up"></i></button>

@@ -16,8 +16,15 @@
         <!-- product -->
         <typeAlias alias="CategoryDTO" type="com.teamProject.syusyu.domain.product.CategoryDTO"/>
         <typeAlias alias="ProductDTO" type="com.teamProject.syusyu.domain.product.ProductDTO"/>
+        <typeAlias alias="SearchConditionDTO" type="com.teamProject.syusyu.domain.product.SearchConditionDTO"/>
         <typeAlias alias="ImageDTO" type="com.teamProject.syusyu.domain.product.ImageDTO"/>
+        <typeAlias alias="BrandDTO" type="com.teamProject.syusyu.domain.product.BrandDTO"/>
+        <typeAlias alias="ImageDTO" type="com.teamProject.syusyu.domain.product.ImageDTO"/>
+        <typeAlias alias="PriceDTO" type="com.teamProject.syusyu.domain.product.PriceDTO"/>
         <typeAlias alias="ProdOptDTO" type="com.teamProject.syusyu.domain.product.ProdOptDTO"/>
+        <typeAlias alias="ProdOptCombDTO" type="com.teamProject.syusyu.domain.product.ProdOptCombDTO"/>
+        <typeAlias alias="OptGrpDTO" type="com.teamProject.syusyu.domain.product.OptGrpDTO"/>
+        <typeAlias alias="OptItemDTO" type="com.teamProject.syusyu.domain.product.OptItemDTO"/>
 
         <!-- order -->
         <typeAlias alias="CartProdDTO" type="com.teamProject.syusyu.domain.order.CartProdDTO"/>
@@ -27,16 +34,20 @@
         <typeAlias alias="OrdDlvAddrDTO" type="com.teamProject.syusyu.domain.order.OrdDlvAddrDTO"/>
         <typeAlias alias="PayRsltDTO" type="com.teamProject.syusyu.domain.order.PayRsltDTO"/>
         <typeAlias alias="OrdStusHistDTO" type="com.teamProject.syusyu.domain.order.OrdStusHistDTO"/>
-
         <typeAlias alias="OrderInfoDTO" type="com.teamProject.syusyu.domain.order.OrderInfoDTO"/>
         <typeAlias alias="PayInfoDTO" type="com.teamProject.syusyu.domain.order.PayInfoDTO"/>
         <typeAlias alias="orderSearchRequestDTO" type="com.teamProject.syusyu.domain.order.request.OrderSearchRequestDTO"/>
+        <typeAlias alias="DeliveryDTO" type="com.teamProject.syusyu.domain.order.DeliveryDTO"/>
+        <typeAlias alias="OrdClaimDTO" type="com.teamProject.syusyu.domain.order.OrdClaimDTO"/>
+        <typeAlias alias="ReviewDTO" type="com.teamProject.syusyu.domain.product.ReviewDTO"/>
+
 
         <!-- cs -->
         <typeAlias alias="NoticeDTO" type="com.teamProject.syusyu.domain.cs.NoticeDTO"/>
         <typeAlias alias="FaqDTO" type="com.teamProject.syusyu.domain.cs.FaqDTO"/>
         <typeAlias alias="FaqSearchCondition" type="com.teamProject.syusyu.domain.cs.FaqSearchCondition" />
         <typeAlias alias="InqryDTO" type="com.teamProject.syusyu.domain.cs.InqryDTO"/>
+        <typeAlias alias="ReviewDTO" type="com.teamProject.syusyu.domain.product.ReviewDTO"/>
 
         <!-- etc -->
         <typeAlias alias="SearchCondition" type="com.teamProject.syusyu.domain.cs.SearchCondition"/>

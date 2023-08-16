@@ -20,7 +20,6 @@
 input {
   width: 100%;
   height: 35px;
-  margin: 15px 0px 10px 0px;
   padding: 10px;
   background: #eee;
   outline-color: #e6e6e6;
@@ -81,9 +80,9 @@ td {
 }
 
 #listBtn {
-  background-color: rgb(236, 236, 236); /* Blue background */
+  color: #fff;
+  background: #212529;
   border: none; /* Remove borders */
-  color: black; /* White text */
   padding: 6px 12px; /* Some padding */
   font-size: 16px; /* Set a font size */
   cursor: pointer; /* Mouse pointer on hover */
@@ -93,6 +92,37 @@ td {
 
 .btn:hover {
   text-decoration: underline;
+}
+
+header .h-search-wrap .input .btn.search {
+  position: absolute;
+  top: 25px;
+  right: 20px;
+}
+
+#editContent {
+  width: 100%;
+  background-color: white;
+  border: none;
+  padding: 20px;
+  border-bottom: 1px solid #eee;
+  line-height: 26px;
+  padding-top: 15px;
+  padding-bottom: 30px;
+  outline: none;
+  margin-bottom: 10px;
+}
+
+.detail__nav-next {
+  margin-top: 20px;
+  padding-top: 10px;
+  padding-left: 25px;
+  margin-bottom: 10px;
+}
+
+.detail__nav-prev {
+  padding-top: 10px;
+  padding-left: 25px;
 }
 
 /*# sourceMappingURL=notice.css.map */

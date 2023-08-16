@@ -6,9 +6,13 @@
 
 
 <head>
-  <style>
-    @import url(${cssUrlBos}/cs/adminNoticeWrite.scss);
-  </style>
+  <script src="<c:url value='/static/bos/summernote/summernote-lite.js'/>"></script>
+  <link href="<c:url value='/static/bos/summernote/summernote-lite.css'/>" rel="stylesheet">
+  <script src="<c:url value='/static/bos/summernote/lang/summernote-ko-KR.js'/>"></script>
+
+    <style>
+      @import url(${cssUrlBos}/cs/adminNoticeModify.scss);
+    </style>
 </head>
 
 <script>
@@ -46,25 +50,29 @@
     <input name="title" type="text" value="${noticeDTO.title}" class="detail-tit1" placeholder="제목을 입력해 주세요." required><br>
 
     <!-- Notice Content -->
+
     상세내용
-    <textarea name="content" rows="15" class="detail-cont" placeholder="내용을 입력해 주세요." required>${noticeDTO.content}</textarea>
+    <textarea id="summernote" name="content" rows="15" class="detail-cont" placeholder="내용을 입력해 주세요." required>${noticeDTO.content}</textarea>
 
 
 
     <!-- Start Date -->
     공지사항 시작 날짜
-    <input type="date" id = noticeCalendar name="startDttm" value = "${noticeDTO.startDttm}" required>
+    <input type="date" id="noticeCalendar1" name="startDttm" value='<fmt:formatDate value="${noticeDTO.startDttm}" pattern="yyyy-MM-dd" />' required>
+
+  <%--    <input type="date" id = noticeCalendar1 name="startDttm" value = "${noticeDTO.startDttm}" required>--%>
 
     <!-- End Date -->
     공지사항 종료 날짜
-    <input type="date" id = noticeCalendar  name="endDttm" value = "${noticeDTO.endDttm}" required>
+    <input type="date" id="noticeCalendar2" name="endDttm" value='<fmt:formatDate value="${noticeDTO.endDttm}" pattern="yyyy-MM-dd" />' required>
+<%--    <input type="date" id = noticeCalendar2  name="endDttm" value = "${noticeDTO.endDttm}" required>--%>
 
-
+<%--    value = "${noticeDTO.startDttm}"--%>
 
 
     <!-- Buttons -->
     <button type="button" id="listBtn" class="btn btn-primary btn-sm"><i class="fa-solid fa-list-ul"></i> 목록</button>
-    <button type="submit" id="writeBtn" class="btn btn-primary btn-sm"><i class="fa fa-pen-nib"></i> 등록</button>
+    <button type="submit" id="writeBtn" class="btn btn-primary btn-sm"><i class="fa fa-pen-nib"></i> 수정</button>
   </form>
 </div>
 
@@ -74,9 +82,29 @@
   // Define button click event handlers
   $(document).ready(function() {
 
+    $('#summernote').summernote({
+      placeholder: 'Hello stand alone ui',
+      tabsize: 2,
+      height: 300,
+      toolbar: [
+        ['style', ['style']],
+        ['font', ['bold', 'underline', 'clear']],
+        ['color', ['color']],
+        ['para', ['ul', 'ol', 'paragraph']],
+        ['table', ['table']],
+        ['insert', ['link', 'picture', 'video']],
+        ['view', ['fullscreen', 'codeview', 'help']]
+      ]
+    });
+
 
     $("#listBtn").on("click", function(){
       location.href="<c:url value='/adminNotice/list${searchCondition.queryString}'/>";
+
+
+      // java.lang.NullPointerException
+      <%--location.href = "<c:url value="/adminNotice/list"/>?page=${sc.page}&pageSize=${sc.pageSize}";--%>
+
     });
 
   });
