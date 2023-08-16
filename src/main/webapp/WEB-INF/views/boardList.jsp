@@ -2,9 +2,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
 <%@ page session="true" %>
-<c:set var="loginId" value="${sessionScope.id}"/>
-<c:set var="loginOutLink" value="${loginId=='' ? '/login/login' : '/login/logout'}"/>
-<c:set var="loginOut" value="${loginId=='' ? 'Login' : 'ID='+=loginId}"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -193,7 +190,7 @@
         <li><a href="<c:url value='/'/>">Home</a></li>
         <li><a href="<c:url value='/board/list'/>">Board</a></li>
         <li><a href="<c:url value='${loginOutLink}'/>">${loginOut}</a></li>
-        <li><a href="<c:url value='/register/add'/>">Sign in</a></li>
+        <li><a href="<c:url value='/fos/register'/>">Sign in</a></li>
         <li><a href=""><i class="fa fa-search"></i></a></li>
     </ul>
 </div>

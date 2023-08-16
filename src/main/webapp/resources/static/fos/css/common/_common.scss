@@ -576,7 +576,7 @@
     &.datepicker{
       cursor: pointer;
       padding-right: 40px;
-      background: #fff url(../images/icon_calendar.png) no-repeat right 20px center;
+      background: #fff url("../../../image/icon_calendar.png") no-repeat right 20px center;
     }
 
     &.del-input{
@@ -588,7 +588,7 @@
         right:20px;
         top:50%;
         transform: translateY(-50%);
-        background: url("../images/icon_remove_18.png") no-repeat center;
+        background: url("../../../image/icon_remove_18.png") no-repeat center;
         text-indent: -9999em;
       }
     }
@@ -1017,7 +1017,7 @@
     font-size: 16px;
     border-radius: 6px;
     border: 1px solid #ddd;
-    background: url(../images/icon_arrow_down.png) no-repeat right center;
+    background: url("../../../image/icon_arrow_down.png") no-repeat right center;
     transition: 0.3s;
     // color: #333;
     color:#ccc;
@@ -1052,7 +1052,7 @@
         font-size: 16px;
         border-radius: 6px;
         border: 1px solid #ddd;
-        background: url(../images/icon_arrow_down.png) no-repeat right center;
+        background: url("../../../image/icon_arrow_down.png") no-repeat right center;
         transition: 0.3s;
         // color: #333;
         color:#ccc;
@@ -1157,6 +1157,7 @@
           transition:initial !important;
           margin:0;
           height: 0;
+          display: none;
 
           .item {
             display: flex;
@@ -1236,12 +1237,12 @@
             color:#333;
 
             &:after {
-              background-image: url(../images/icon_arrow_up_50.png);
+              background-image: url("../../../image/icon_arrow_up_50.png");
             }
           }
 
           > .dropdown.icon {
-            background-image: url(../images/icon_arrow_up_50.png);
+            background-image: url("../../../image/icon_arrow_up_50.png");
           }
 
           .menu {
@@ -1250,19 +1251,22 @@
             left:-1px;
             width: calc(100% + 2px);
             min-width:100%;
-            max-height:325px !important;
+            max-height:300px !important;
+            overflow-x: auto;
             height: auto;
             margin-top: -2px;
             border: 1px solid #333;
             outline:0;
             box-shadow: none;
             transition:none !important;
+            z-index: 11;
+            background: #ffffff;
           }
 
           &.option-select {
             > .text {
               &:after {
-                background-image: url(../images/icon_arrow_up_50.png);
+                background-image: url("../../../image/icon_arrow_up_50.png");
               }
             }
           }
@@ -1272,7 +1276,7 @@
           > .text {
             color:#333;
             &:after {
-              background-image: url(../images/icon_arrow_down_20.svg);
+              background-image: url("../../../image/icon_arrow_down_20.svg");
             }
             img,
             .img {
@@ -1341,7 +1345,7 @@
 
   &.icon {
     height: auto;
-    font-size: 0;
+    font-size: 0px;
     border-radius: 0;
     background-position: center center;
     background-repeat: no-repeat;
@@ -1395,23 +1399,23 @@
     &.search {
       width: 21px;
       height: 21px;
-      background-image: url(../images/icon_search_21.svg);
+      background-image: url("../../../image/icon_search_21.svg");
       &.big {
         width: 24px;
         height: 24px;
-        background-image: url(../images/icon_search_24.png);
+        background-image: url(..resources/static/image/icon_search_24.jpg);
       }
     }
     &.mypage {
       width: 30px;
       height: 30px;
-      background: url(../images/icon_my.svg) no-repeat center top;
+      background: url("../../../image/icon_my.svg") no-repeat center top;
     }
     &.bag {
       width: 37px;
       height: 30px;
       overflow: visible;
-      background: url(../images/icon_bag.svg) no-repeat left top;
+      background: url("../../../image/icon_bag.svg") no-repeat left top;
       > .cnt {
         position: absolute;
         top: -6px;
@@ -1456,12 +1460,12 @@
     &.remove_18 {
       width: 18px;
       height: 18px;
-      background: url(../images/icon_remove_18.png) no-repeat center center;
+      background: url("../../../image/icon_remove_18.png") no-repeat center center;
     }
     &.remove_19 {
       width: 19px;
       height: 19px;
-      background: url(../images/icon_remove_19.png) no-repeat center center;
+      background: url("../../../image/icon_remove_19.png") no-repeat center center;
     }
     &.remove_20 {
       width: 20px;
@@ -1487,10 +1491,10 @@
     &.like{
       width: 30px;
       height: 30px;
-      background: url(../images/icon_heart.svg) no-repeat center center;
+      background: url("../../../image/icon_heart.svg") no-repeat center center;
       transition: .3s;
       &.on{
-        background-image: url(../images/icon_heart_on.svg);
+        background-image: url("../../../image/icon_heart_on.svg");
       }
       &.big {
         width: 50px;
@@ -1505,20 +1509,20 @@
     &.share{
       width: 30px;
       height: 30px;
-      background: url(../images/icon_share.svg) no-repeat center center;
+      background: url("../../../image/icon_share.svg") no-repeat center center;
     }
     &.mark{
       >span{
         display: inline-block;
         width: 18px;
         height: 18px;
-        background: url(../images/icon_mark3.png) no-repeat center center;
+        background: url("../../../image/icon_mark3.png") no-repeat center center;
       }
     }
     &.gift{
       >span{
         display: inline-block;
-        background: url(../images/icon_gift.svg) no-repeat left center/ 20px 20px;
+        background: url("../../../image/icon_gift.svg") no-repeat left center/ 20px 20px;
       }
     }
 
@@ -1659,7 +1663,7 @@
       line-height: 22px;
       &.icon-ty1 {
         padding-left: 25px;
-        background: url(../images/icon_gift.svg) no-repeat left center;
+        background: url("../../../image/icon_gift.svg") no-repeat left center;
       }
     }
   }
@@ -3646,7 +3650,7 @@
       transition: 0.3s;
       width: 20px;
       height:20px;
-      background: url("../images/arrow-b-20.svg") no-repeat center/cover;
+      background: url(   "../../../image/arrow-b-20.svg") no-repeat center/cover;
     }
   }
   &-text{

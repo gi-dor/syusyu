@@ -1,7 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:set var="loginOutLink" value="${sessionScope.id != null ? '/login/logout' : '/login/login'}" />
-<c:set var="loginOutText" value="${sessionScope.id != null ? 'Logout' : 'Login'}" />
+
 <footer id="main_footer" style="margin-top: 110px;">
     <div class="footer_content">
         <div class="footer_logo">
@@ -21,7 +20,7 @@
                 <div class="footer_quickLink_list">
                     <strong class="footer_quickLink_title">NOTICE</strong>
                     <ul class="footer_quickLink_sub">
-                        <li class="footer_quickLink_subList">공지사항</li>
+                        <li class="footer_quickLink_subList"><a href="<c:url value='/notice/noticeList'/>">공지사항</a></li>
                         <li class="footer_quickLink_subList">이용약관</li>
                         <li class="footer_quickLink_subList">개인정보처리방침</li>
                     </ul>
@@ -30,7 +29,7 @@
                     <strong class="footer_quickLink_title">SUPPORT</strong>
                     <ul class="footer_quickLink_sub">
                         <li class="footer_quickLink_subList">고객센터</li>
-                        <li class="footer_quickLink_subList">FAQ</li>
+                        <li class="footer_quickLink_subList"><a href="<c:url value='/faq/faqList'/>">FAQ</a></li>
                         <li class="footer_quickLink_subList">교환 & 반품문의</li>
                     </ul>
                 </div>

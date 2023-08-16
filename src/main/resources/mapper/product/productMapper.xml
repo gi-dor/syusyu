@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.teamProject.syusyu.productMapper">
+    <!--카테고리별 상품 리스트 출력    -->
+    <select id="selectProductList" parameterType="map" resultType="ProductDTO">
+        SELECT P.PROD_ID
+             , P.CATE_ID
+             , C.MIDDLE_NO
+             , C.MIDDLE_NM
+             , C.SMALL_NO
+             , C.SMALL_NM
+             , P.PROD_NM
+             , P.MODEL_NM
+             , P.BRND_ID
+             , B.BRND_NM
+             , PRC.SALE_PRC
+             , PRC.DC_PER /* 할인율 */
+             , TRUNCATE(PRC.SALE_PRC - (PRC.SALE_PRC * (PRC.DC_PER / 100)), 0) AS DC_PRC /* 할인가 */
+             , P.REP_IMG
+             , P.STATUS
+             , PRC.SALE_ST_DTTM
+             , PRC.SALE_ED_DTTM
+             , PRC.DC_ST_DTTM
+             , PRC.DC_ED_DTTM
+             , P.REG_DTTM
+             , P.REGR_ID
+             , COALESCE(ASR.AVG_STAR_RATING, 0)                                AS AVG_STAR_RATING
+             , COALESCE(ASR.REVW_CNT, 0)                                       AS REVW_CNT
+        FROM PRODUCT P
+                 JOIN CATEGORY C ON P.CATE_ID = C.CATE_ID
+                 JOIN BRAND B ON P.BRND_ID = B.BRND_ID
+                 JOIN PRICE PRC ON P.PROD_ID = PRC.PROD_ID
+                 LEFT JOIN (SELECT prod_id,
+                                   ROUND(AVG(STAR_RATING), 1) AS AVG_STAR_RATING,
+                                   COUNT(REVW_NO)             AS REVW_CNT
+                            FROM review
+                            GROUP BY prod_id) AS ASR ON P.PROD_ID = ASR.prod_id
+        WHERE P.STATUS = 601 /* 판매중 */
+          AND P.DEL_YN = 'N'
+          AND (C.MIDDLE_NM, C.SMALL_NM) IN (SELECT MIDDLE_NM,
+                                                   SMALL_NM
+                                            FROM CATEGORY SC
+                                            WHERE MIDDLE_NO = #{middleNo}
+                                              AND SMALL_NO = #{smallNo})
+    </select>
+    <!--중분류에 따른 전체 상품 리스트-->
+    <select id="selectProductAllList" parameterType="int" resultType="ProductDTO">
+        SELECT P.PROD_ID
+             , P.CATE_ID
+             , C.MIDDLE_NO
+             , C.MIDDLE_NM
+             , C.SMALL_NO
+             , C.SMALL_NM
+             , P.PROD_NM
+             , P.MODEL_NM
+             , P.BRND_ID
+             , B.BRND_NM
+             , PRC.SALE_PRC
+             , PRC.DC_PER /* 할인율 */
+             , TRUNCATE(PRC.SALE_PRC - (PRC.SALE_PRC * (PRC.DC_PER / 100)), 0) AS DC_PRC /* 할인가 */
+             , P.REP_IMG
+             , P.STATUS
+             , PRC.SALE_ST_DTTM
+             , PRC.SALE_ED_DTTM
+             , PRC.DC_ST_DTTM
+             , PRC.DC_ED_DTTM
+             , P.REG_DTTM
+             , P.REGR_ID
+             , COALESCE(ASR.AVG_STAR_RATING, 0)                                   AS AVG_STAR_RATING
+             , COALESCE(ASR.REVW_CNT, 0)                                          AS REVW_CNT
+        FROM PRODUCT P
+                 JOIN CATEGORY C ON P.CATE_ID = C.CATE_ID
+                 JOIN BRAND B ON P.BRND_ID = B.BRND_ID
+                 JOIN PRICE PRC ON P.PROD_ID = PRC.PROD_ID
+                 LEFT JOIN (SELECT prod_id,
+                                   ROUND(AVG(STAR_RATING), 1) AS AVG_STAR_RATING,
+                                   COUNT(REVW_NO)             AS REVW_CNT
+                            FROM review
+                            GROUP BY prod_id) AS ASR ON P.PROD_ID = ASR.prod_id
+        WHERE P.STATUS = 601 /* 판매중 */
+          AND P.DEL_YN = 'N'
+          AND (C.MIDDLE_NM, C.SMALL_NM) IN (SELECT MIDDLE_NM,
+                                                   SMALL_NM
+                                            FROM CATEGORY SC
+                                            WHERE MIDDLE_NO = #{middleNo})
+    </select>
+
+    <select id="selectProductStatus" parameterType="int" resultType="ProductDTO">
+        SELECT PROD_ID, STATUS
+        FROM PRODUCT
+        WHERE PROD_ID IN
+        <foreach collection="array" item="prodIdArr" open="(" close=")" separator=",">
+            #{prodIdArr}
+        </foreach>
+    </select>
+    <select id="selectProduct" parameterType="int" resultType="ProductDTO">
+        SELECT P.PROD_ID
+             , P.CATE_ID
+             , C.MIDDLE_NO
+             , C.MIDDLE_NM
+             , C.SMALL_NO
+             , C.SMALL_NM
+             , P.PROD_NM
+             , P.MODEL_NM
+             , P.BRND_ID
+             , B.BRND_NM
+             , P.RLES_DT
+             , P.PROD_DTL_DESC
+             , P.DLV_CHG_DTL
+             , PRC.SALE_PRC
+             , PRC.DC_PER /* 할인율 */
+             , TRUNCATE(PRC.SALE_PRC - (PRC.SALE_PRC * (PRC.DC_PER / 100)), -1) AS DC_PRC /* 할인가 */
+             , P.REP_IMG
+             , p.MFGD_MATR
+             , P.MFTCO
+             , P.MFT_NATN
+             , P.STATUS
+             , P.VW_CNT
+             , PRC.SALE_ST_DTTM
+             , PRC.SALE_ED_DTTM
+             , PRC.DC_ST_DTTM
+             , PRC.DC_ED_DTTM
+             , P.REG_DTTM
+             , COALESCE(ASR.AVG_STAR_RATING, 0)                                 AS AVG_STAR_RATING
+             , COALESCE(ASR.REVW_CNT, 0)                                        AS REVW_CNT
+        FROM PRODUCT P
+                 JOIN CATEGORY C ON P.CATE_ID = C.CATE_ID
+                 JOIN BRAND B ON P.BRND_ID = B.BRND_ID
+                 JOIN PRICE PRC ON P.PROD_ID = PRC.PROD_ID
+                 LEFT JOIN (SELECT prod_id,
+                                   ROUND(AVG(STAR_RATING), 1) AS AVG_STAR_RATING,
+                                   COUNT(REVW_NO)
+                                                              AS REVW_CNT
+                            FROM review
+                            GROUP BY prod_id) AS ASR ON P.PROD_ID = ASR.prod_id
+        WHERE P.STATUS
+            = 601 /* 판매중 */
+          AND P.DEL_YN = 'N'
+          AND P.PROD_ID=${prodId}
+    </select>
+    <select id="selectImageList" parameterType="int" resultType="ImageDTO">
+        SELECT IMAGE_PATH
+        FROM SML_IMG
+        WHERE DEL_YN = 'N'
+          AND PROD_ID = ${prodId}
+    </select>
+
+
+
+</mapper>
+

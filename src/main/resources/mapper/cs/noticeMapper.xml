@@ -4,88 +4,143 @@
 
 <mapper namespace="com.teamProject.syusyu.NoticeMapper">
 
+    <!--    공지사항 글 갯수 조회-->
     <select id="count" resultType="int">
-        SELECT count(*) FROM notice
+        SELECT count(*)
+        FROM notice
     </select>
 
+    <!--    공지사항 전체 삭제-->
     <delete id="deleteAll">
-        DELETE FROM notice
+        DELETE
+        FROM notice
     </delete>
 
-    <delete id="delete" parameterType="map">
-        DELETE FROM notice WHERE NOTC_NO = #{notcNo} and REGR_ID = #{regrId}
+    <!--    공지사항 1개 삭제-->
+    <delete id="delete" parameterType="int">
+        delete
+        from notice
+        where NOTC_NO = #{notcNo}
     </delete>
 
-    <insert id="insert" parameterType="NoticeDto">
-        INSERT INTO notice
-            (TITLE, CONTENT)
-        VALUES
-            (#{title}, #{content})
+    <!--    <delete id="delete" parameterType="map">-->
+    <!--        DELETE-->
+    <!--        FROM notice-->
+    <!--        WHERE NOTC_NO = #{notcNo}-->
+    <!--          and REGR_ID = (select MBR_ID-->
+    <!--                         from member-->
+    <!--                         where LGIN_ID = #{lginId})-->
+    <!--    </delete>-->
+
+
+    <!--        공지사항 등록 -->
+    <insert id="insert" parameterType="NoticeDTO">
+        INSERT INTO notice (REGR_ID,NOTC_TP, TITLE, CONTENT, START_DTTM, END_DTTM)
+        VALUES (#{regrId},#{notcTp}, #{title}, #{content}, #{startDttm}, #{endDttm})
     </insert>
 
 
+    <!--    공지사항 수정하기-->
+    <update id="update" parameterType="NoticeDTO">
+        UPDATE notice
+        SET TITLE    = #{title}
+          , CONTENT  = #{content}
+          , UPD_DTTM = now()
+          , START_DTTM = #{startDttm}
+          , END_DTTM = #{endDttm}
+        WHERE NOTC_NO = #{notcNo}
+          and REGR_ID = #{regrId}
+    </update>
 
-    <select id="selectAll" resultType="NoticeDto">
-        SELECT NOTC_NO, NOTC_TP, TITLE, CONTENT, REGR_ID, VIEW_CNT, REG_DTTM
+
+    <!--    모든 공지사항 내용 조회-->
+    <!-- 삭제 여부(DEL_YN)가 'N'인 공지사항의 모든 정보를 조회하고,
+    등록일자(REG_DTTM)와 공지사항 번호(NOTC_NO)로 내림차순 정렬하는 쿼리 -->
+    <select id="selectAll" resultType="NoticeDTO">
+        SELECT NOTC_NO,
+               NOTC_TP,
+               TITLE,
+               CONTENT,
+               REGR_ID,
+               VIEW_CNT,
+               REG_DTTM,
+               UPD_DTTM,
+               START_DTTM,
+               END_DTTM,
+               GET_CD_NM('N0001', NOTC_TP) AS NOTC_TP_NM # 공지 종류 이름
         FROM notice
+        where DEL_YN = 'N'
         ORDER BY REG_DTTM DESC, NOTC_NO DESC
     </select>
 
+
+    <!-- 공지사항 테이블에서 필요한 정보를 조회하는 쿼리 (재사용을 위해 sql 태그로 정의함) -->
     <sql id="selectFromBoard">
-        SELECT NOTC_NO, TITLE, CONTENT, REGR_ID, VIEW_CNT, REG_DTTM
+        SELECT NOTC_NO,
+               NOTC_TP,
+               TITLE,
+               CONTENT,
+               REGR_ID,
+               VIEW_CNT,
+               REG_DTTM,
+               UPD_DTTM,
+               START_DTTM,
+               END_DTTM,
+               GET_CD_NM('N0001', NOTC_TP) AS NOTC_TP_NM # 공지 종류 이름
         FROM notice
     </sql>
 
-    <select id="select" parameterType="int" resultType="NoticeDto">
+    <!-- 공지사항 번호(notcNo)에 해당하는 정보를 조회하는 쿼리 1행만 조회함 (selectFromBoard를 재사용함) -->
+    <select id="select" parameterType="int" resultType="NoticeDTO">
         <include refid="selectFromBoard"/>
         WHERE NOTC_NO = #{notcNo}
     </select>
 
-<!--    <select id="selectPage" parameterType="map" resultType="BoardDto">-->
-<!--        <include refid="selectFromBoard"/>-->
-<!--        ORDER BY reg_date DESC, bno DESC-->
-<!--        LIMIT #{offset}, #{pageSize}-->
-<!--    </select>-->
 
-    <select id="selectPage" parameterType="map" resultType="NoticeDto">
-        SELECT NOTC_NO,NOTC_TP ,TITLE,CONTENT,VIEW_CNT ,REG_DTTM
+    <!--    페이지 별로 공지사항 조회-->
+    <select id="selectPage" parameterType="map" resultType="NoticeDTO">
+        SELECT NOTC_NO,
+               NOTC_TP,
+               TITLE,
+               CONTENT,
+               VIEW_CNT,
+               REG_DTTM,
+               UPD_DTTM,
+               START_DTTM,
+               END_DTTM,
+               GET_CD_NM('N0001', NOTC_TP) AS NOTC_TP_NM # 공지 종류 이름
+
         FROM notice
         ORDER BY REG_DTTM DESC, NOTC_NO DESC
-        LIMIT #{offset}, #{pageSize}
+            LIMIT #{offset}, #{pageSize}
     </select>
 
-    <update id="update" parameterType="NoticeDto">
-        UPDATE notice
-        SET   TITLE = #{title}
-          , CONTENT = #{content}
-          , UPD_DTTM = now()
-        WHERE NOTC_NO = #{notcNo} and REGR_ID = #{regrId}
-    </update>
 
+    <!--    공지사항에는 코멘트 필요없어서 주석 처리함 나중에 리뷰에서 써야지-->
+    <!--    <update id="updateCommentCnt" parameterType="map">-->
+    <!--        UPDATE notice-->
+    <!--        SET   comment_cnt = comment_cnt + #{cnt}-->
+    <!--        WHERE bno = #{bno}-->
+    <!--    </update>-->
 
-<!--    공지사항에는 코멘트 필요없어서 주석 처리함 나중에 리뷰에서 써야지-->
-<!--    <update id="updateCommentCnt" parameterType="map">-->
-<!--        UPDATE notice-->
-<!--        SET   comment_cnt = comment_cnt + #{cnt}-->
-<!--        WHERE bno = #{bno}-->
-<!--    </update>-->
-
+    <!--    공지사항 조회수 증가-->
     <update id="increaseViewCnt" parameterType="int">
         UPDATE notice
-        SET   VIEW_CNT = VIEW_CNT + 1
+        SET VIEW_CNT = VIEW_CNT + 1
         WHERE NOTC_NO = #{notcNo}
     </update>
 
+    <!--    검색에 쓰이고 조건별로 사용할 동적쿼리 제목 , 글번호 , 제목+내용 -->
     <sql id="searchCondition">
         <choose>
             <when test='option=="T"'>
                 AND TITLE LIKE CONCAT('%', #{keyword}, '%')
             </when>
-            <when test='option=="W"'>
-                AND REGR_ID LIKE CONCAT('%', #{keyword}, '%')
-            </when>
             <when test='option=="C"'>
                 AND CONTENT LIKE CONCAT('%', #{keyword}, '%')
+            </when>
+            <when test='option=="N"'>
+                AND NOTC_NO LIKE CONCAT('%', #{keyword}, '%')
             </when>
             <otherwise>
                 AND (TITLE LIKE CONCAT('%', #{keyword}, '%')
@@ -94,40 +149,55 @@
         </choose>
     </sql>
 
-    <select id="searchSelectPage" parameterType="SearchCondition" resultType="NoticeDto">
-        SELECT NOTC_NO ,TITLE ,CONTENT ,REGR_ID ,VIEW_CNT ,REG_DTTM ,NOTC_TP
+    <!--    검색조건에 맞게 페이지별로 공지 조회-->
+<!--    <select id="searchSelectPage" parameterType="SearchCondition" resultType="NoticeDTO">-->
+<!--        SELECT NOTC_NO ,TITLE ,CONTENT ,REGR_ID ,VIEW_CNT ,REG_DTTM ,NOTC_TP ,START_DTTM , END_DTTM , UPD_DTTM-->
+<!--        FROM notice-->
+<!--        WHERE TRUE-->
+<!--        <include refid="searchCondition"/>-->
+<!--        ORDER BY REG_DTTM DESC, NOTC_NO DESC-->
+<!--        LIMIT #{offset}, #{pageSize}-->
+<!--    </select>-->
+
+    <select id="searchSelectPage" parameterType="SearchCondition" resultType="NoticeDTO">
+        SELECT NOTC_NO, TITLE, CONTENT, REGR_ID, VIEW_CNT, REG_DTTM, NOTC_TP, START_DTTM, END_DTTM, UPD_DTTM,
+        GET_CD_NM('N0001', NOTC_TP) AS NOTC_TP_NM
         FROM notice
-         WHERE TRUE
-        <include refid="searchCondition" />
+        WHERE TRUE
+        <include refid="searchCondition"/>
         ORDER BY REG_DTTM DESC, NOTC_NO DESC
-            LIMIT #{offset}, #{pageSize}
+        LIMIT #{offset}, #{pageSize}
     </select>
 
+    <!--    검색 이후  공지사항 갯수 조회-->
     <select id="searchResultCnt" parameterType="SearchCondition" resultType="int">
         SELECT count(*)
         FROM notice
         WHERE TRUE
-        <include refid="searchCondition" />
+        <include refid="searchCondition"/>
     </select>
 
-    <select id="selectPrev" parameterType="int" resultType="NoticeDto">
-        SELECT TITLE ,NOTC_NO
+    <!--    이전 공지사항 제목 번호 조회-->
+    <select id="selectPrev" parameterType="int" resultType="NoticeDTO">
+        SELECT TITLE, NOTC_NO
         FROM notice
-        WHERE NOTC_NO = #{notcNo} - 1
+        WHERE NOTC_NO &lt; #{notcNo}
+        ORDER BY NOTC_NO DESC LIMIT 1
     </select>
 
-    <select id="selectNext" parameterType="int" resultType="NoticeDto">
-        select TITLE ,NOTC_NO
+    <!--        다음 공지사항 제목 번호 조회-->
+    <select id="selectNext" parameterType="int" resultType="NoticeDTO">
+        select TITLE, NOTC_NO
         from notice
-        where NOTC_NO = #{notcNo} + 1
+        where NOTC_NO &gt; #{notcNo}
+        order by NOTC_NO asc LIMIT 1
     </select>
 
 
-<!--    select title-->
-<!--    from notice-->
-<!--    where notc_no = (select notc_no-->
-<!--                        from notice-->
-<!--                    where notc_no = #{notc_no} -1)-->
-
+    <!--    select title-->
+    <!--    from notice-->
+    <!--    where notc_no = (select notc_no-->
+    <!--                        from notice-->
+    <!--                    where notc_no = #{notc_no} -1)-->
 
 </mapper>

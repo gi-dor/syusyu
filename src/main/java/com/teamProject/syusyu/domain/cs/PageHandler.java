@@ -1,15 +1,17 @@
 package com.teamProject.syusyu.domain.cs;
 
 public class PageHandler {
-    //    private int page;      // 현재 페이지
-//     private int pageSize; // 한 페이지의 크기
+//    private int page;      현재 페이지
+//    private int pageSize;   페이지의 크기
 //    private String option;
 //    private String keyword;
+    // 위 4개를 SearchCondition 클래스를 만들어서 그곳으로 이동 .
+    // sc만 사용할 예정
     private SearchCondition sc;
 
-    private int totalCnt; // 총 게시물의 갯수
+    private int totalCnt; // 총 게시물의 개수
     private int naviSize = 10; // 페이지 내비게이션의 크기
-    private int totalPage; // 전체 페이지의 갯수
+    private int totalPage; // 전체 페이지의 개수
     private int beginPage; // 내비게이션의 첫번째 페이지
     private int endPage;   // 내비게이션의 마지막 페이지
     private boolean showPrev; // 이전페이지로 이동하는 링크를 보여줄것인지 여부
@@ -32,10 +34,11 @@ public class PageHandler {
 
     public void doPaging(int totalCnt, SearchCondition sc) {
         this.totalCnt = totalCnt;
+        this.sc = sc;
 //      this.page = page;
 //      this.pageSize = pageSize;
 
-        totalPage = (int) Math.ceil(totalCnt / (double) sc.getPage());
+        totalPage = (int)Math.ceil(totalCnt / (double) sc.getPageSize());
         beginPage = (sc.getPage() - 1) / naviSize * naviSize + 1;
 
 

@@ -1,3 +1,4 @@
+@charset "UTF-8";
 .fb__bbs__header__filter {
   position: absolute;
   top: 60px;
@@ -99,6 +100,7 @@ button, [type=button], [type=reset], [type=submit] {
 }
 
 table {
+  margin-top: 40px;
   table-layout: fixed;
   width: 100%;
   max-width: 100%;
@@ -135,8 +137,8 @@ td {
 }
 
 .tbl.ty1 > table > tbody > tr > td {
-  padding: 20px;
-  line-height: 23px;
+  padding: 18px;
+  line-height: 35px;
   border-bottom: 1px solid #eee;
 }
 
@@ -170,15 +172,35 @@ ta-c {
   font-size: 15px !important;
 }
 
-.tbl.ty1 > table > tbody > tr > td {
-  padding: 20px;
-  line-height: 23px;
-  border-bottom: 1px solid #eee;
-}
-
 .notice-title {
   text-align: left;
   padding-left: 50px;
+}
+
+.wrap-pagination {
+  margin: 50px auto 0;
+  text-align: center;
+  font-size: 20px;
+}
+
+.page {
+  margin: 0 5px;
+}
+
+.fa-caret-down {
+  position: absolute;
+  top: 50%;
+  left: 80px; /* 아이콘의 위치 조정 */
+  transform: translateY(-50%);
+  pointer-events: none; /* 아이콘에 마우스 이벤트 적용되지 않도록 설정 */
+}
+
+.wrap-pagination .page.paging-active {
+  font-weight: bold;
+  color: #fff; /* 선택된 페이지 숫자의 글자색을 흰색으로 설정 */
+  background-color: #000; /* 선택된 페이지의 배경색을 검정색으로 설정 */
+  padding: 8px 12px; /* 선택된 페이지의 패딩 사이즈를 조정 */
+  border-radius: 4px; /* 선택된 페이지의 테두리를 둥글게 설정 */
 }
 
 /*# sourceMappingURL=noticeList.css.map */
