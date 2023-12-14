@@ -125,6 +125,6 @@
 
 <br>
 
-- 자바의 정석
-- 스프링의 정석
+- <a href = "https://www.youtube.com/user/MasterNKS"> 자바의 정석 </a>
+- <a href = "https://fastcampus.co.kr/dev_academy_nks"> 스프링의 정석 </a>
 - <a href = "https://www.w3schools.com/howto/howto_js_accordion.asp"> W3School </a>
