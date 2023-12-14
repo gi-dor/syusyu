@@ -1,6 +1,7 @@
 <h1 align="center">Welcome to SYUSYU 👋</h1>
 
 <br>
+<br>
 
 ### 🏚 Project SyuSyu 
 - #### chaussure  : 마음에 들어하는 것
@@ -18,11 +19,9 @@
 ### 🐥 목차 
 
 - 개요
-- 기획
 - 기술 스택
 - 동영상
 - 구현기능
-- 
 - 참조
   
 
@@ -40,11 +39,11 @@
 - 프로젝트 이름 :  신발 전문 쇼핑몰 SyuSyu
 - 프로젝트 기간 : 2023.05.30~2023.08.06
 - 벤치마킹 사이트 : 
-    <a href = "https://www.ottogimall.co.kr/front/main">  오뚜기 몰  </a>  ,
-    <a href = "https://kream.co.kr/" >  KREAM  </a>  ,
-    <a href = "https://folderstyle.com/">  FOLDER  </a>  ,
-    <a href = "https://sell.smartstore.naver.com/">  네이버 스마트스토어  </a>  ,
-    <a href = "https://www.cafe24.com/" >  CAFE24  </a>
+    <a href = "https://www.ottogimall.co.kr/front/main">  오뚜기 몰  </a> ,
+    <a href = "https://kream.co.kr/" >                    KREAM  </a>  ,
+    <a href = "https://folderstyle.com/">                 FOLDER  </a>  ,
+    <a href = "https://sell.smartstore.naver.com/">       네이버 스마트스토어  </a>  ,
+    <a href = "https://www.cafe24.com/" >                 CAFE24  </a> 
 
 <br>
 
@@ -110,10 +109,15 @@
 
 #### 📺  동영상 
 
-- <a href = "https://youtu.be/H8s0jUxJAV4?si=1jmpjTnuhPU5TlqD" > YOUTUBE  </a>
+<br>
+
+[![YouTube Badge](https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://youtu.be/H8s0jUxJAV4?si=1jmpjTnuhPU5TlqD)
 
 <br>
 
+----
+
+### 💻 구현 기능
 
  -----
   
@@ -123,4 +127,4 @@
 
 - 자바의 정석
 - 스프링의 정석
-- W3School
+- <a href = "https://www.w3schools.com/howto/howto_js_accordion.asp"> W3School </a>
