@@ -111,7 +111,8 @@
 
 <br>
 
-[![YouTube Badge](https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://youtu.be/H8s0jUxJAV4?si=1jmpjTnuhPU5TlqD)
+
+[![YouTube Badge](https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://youtu.be/H8s0jUxJAV4?si=1jmpjTnuhPU5TlqD){:target="_blank"}
 
 <br>
 
