@@ -21,7 +21,10 @@
 - [개요](#개요)
 - [기술 스택](#기술-스택)
 - [동영상](#동영상)
+- [프로젝트 목적](#프로젝트-목적)
 - [구현 기능](#구현-기능)
+- [ERD](#ERD)
+- [프로젝트 이후 느낀점](#프로젝트-이후-느낀점)
 - [참조](#참조)
   
 
@@ -48,6 +51,7 @@
 <br>
 
 ----------
+
 
 <br>
  
@@ -117,12 +121,37 @@
 
 ----
 
-### 💻 구현 기능  <a name="구현-기능"></a>
+### 🎨 프로젝트 목적  <a name="프로젝트-목적"></a>
+
+
 
 <br>
 
 
- -----
+----
+
+### 💻 구현 기능  <a name="구현-기능"></a>
+
+<br>
+
+--------------
+
+<br>
+
+### 🧩 ERD <a name="ERD"></a>
+<br><br>
+
+ <img src = https://github.com/gi-dor/HTA/assets/86302876/c16c0a17-e361-4ada-99e0-fb7f94cb664e />
+
+
+---------
+
+<br>
+
+### 📌 프로젝트 이후 느낀점  <a name="프로젝트-이후-느낀점"></a>
+
+
+-----
   
 ### 참조 <a name="참조"></a>
 
@@ -131,3 +160,4 @@
 - <a href = "https://www.youtube.com/user/MasterNKS"> 자바의 정석 </a>
 - <a href = "https://fastcampus.co.kr/dev_academy_nks"> 스프링의 정석 </a>
 - <a href = "https://www.w3schools.com/howto/howto_js_accordion.asp"> W3School </a>
+- <a href ="https://gi-dor.tistory.com/category/First/Spring"> 블로그 </a>
