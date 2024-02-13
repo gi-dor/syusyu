@@ -67,8 +67,6 @@
     <img src = https://github.com/gi-dor/HTA/assets/86302876/dc590426-3112-410c-9086-bcc765f97881 width = 90 height = 100/>
     <img src = https://github.com/gi-dor/HTA/assets/86302876/d3be7341-6e40-4be0-badd-77c877e20968 width = 90 height = 100/>
     <img src = https://github.com/gi-dor/HTA/assets/86302876/d2173a4b-9655-4942-83a0-ff344946a90c width = 90 height = 100/>
-    <img src = https://github.com/gi-dor/HTA/assets/86302876/b9a29b46-6944-476a-9dfc-3a5b21087616 width = 90 height = 100/>
-    <img src = https://github.com/gi-dor/HTA/assets/86302876/c6642c07-c997-4546-8d92-cce09f8890f1 width = 90 height = 100/>
     <img src = https://github.com/gi-dor/HTA/assets/86302876/d4dc9837-a078-42bc-a014-21aa23a9fa40 width = 90 height = 100/>
 
 
@@ -79,8 +77,6 @@
 
 <br>
   <img src = https://github.com/gi-dor/HTA/assets/86302876/8bf76c3d-c44b-4f9f-bfce-21446fff2646 width = 100 height = 100/>
-  <img src = https://github.com/gi-dor/HTA/assets/86302876/c062b0f7-870f-46b4-8030-07c01a79bfd6 width = 100 height = 100/>
-  <img src = https://github.com/gi-dor/HTA/assets/86302876/a9dcfde0-141f-4550-bc10-41c4550a677f width = 100 height = 100/>
   <img src = https://github.com/gi-dor/HTA/assets/86302876/99be659e-8a4a-4fce-bd35-378648682216 width = 100 height = 100/>
   <img src = https://github.com/gi-dor/HTA/assets/86302876/ea621051-e372-4792-8b07-e0df87798328  width = 100 height = 100/>
   <img src = https://github.com/gi-dor/HTA/assets/86302876/7223fa72-b4d6-449c-b97a-03ad47e1174b  width = 100 height = 100/>
@@ -232,14 +228,33 @@ Conflict          : 합병할때 충돌일어나서 수정한 경우
 
 ### 💻 구현 기능  <a name="구현-기능"></a>
 
-<br>
+1. 공지사항 
+<img src="공지사항_List.jpg">
+<img src="공지사항 상세.jpg">
+
+2. 공지사항 _관리자
+   <img src="공지사항관리자_List.jpg">
+   <img src="공지사항관리자_글작성.jpg">
+   <img src="공지사항관리자_삭제.jpg">
+   <img src="공지사항작성,수정_관리자.jpg">
+
+3. FAQ
+  <img src="FAQ.jpg">
+  <img src="FAQ_상세1.jpg">
+  <img src="FAQ_상세2.jpg">
+
+4. FAQ 관리자
+  <img src="FAQ 관리자.jpg">
+
+5. 상품 리뷰
+   <img src="상품 리뷰.jpg">
 
 --------------
 
 <br>
 
-### 🧩 ERD <a name="모델링"></a>
-<br><br>
+### 🧩 ERD (노란색) <a name="모델링"></a>
+<br>
 
  <img src = https://github.com/gi-dor/HTA/assets/86302876/c16c0a17-e361-4ada-99e0-fb7f94cb664e />
 
