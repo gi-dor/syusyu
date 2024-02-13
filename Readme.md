@@ -3,7 +3,7 @@
 <br>
 <br>
 
-### 🏚 Project SyuSyu 
+### 🏚 Project SyuSyu
 - #### chaussure  : 마음에 들어하는 것
 
 <br>
@@ -16,18 +16,16 @@
 ---
 <br>
 
-### 🐥 목차 
+### 🐥 목차
 
 - [개요](#개요)
 - [기술 스택](#기술-스택)
 - [동영상](#동영상)
 - [컨벤션](#컨벤션)
-- [프로젝트 목적](#프로젝트-목적)
 - [구현 기능](#구현-기능)
-- [ERD](#ERD)
+- [ERD](#모델링)
 - [프로젝트 이후 느낀점](#프로젝트-이후-느낀점)
-- [참조](#참조)
-  
+
 
 <br>
 
@@ -42,12 +40,12 @@
 
 - 프로젝트 이름 :  신발 전문 쇼핑몰 SyuSyu
 - 프로젝트 기간 : 2023.05.30~2023.08.06
-- 벤치마킹 사이트 : 
-    <a href = "https://www.ottogimall.co.kr/front/main">  오뚜기 몰  </a> ,
-    <a href = "https://kream.co.kr/" >                    KREAM  </a>  ,
-    <a href = "https://folderstyle.com/">                 FOLDER  </a>  ,
-    <a href = "https://sell.smartstore.naver.com/">       네이버 스마트스토어  </a>  ,
-    <a href = "https://www.cafe24.com/" >                 CAFE24  </a> 
+- 벤치마킹 사이트 :
+  <a href = "https://www.ottogimall.co.kr/front/main">  오뚜기 몰  </a> ,
+  <a href = "https://kream.co.kr/" >                    KREAM  </a>  ,
+  <a href = "https://folderstyle.com/">                 FOLDER  </a>  ,
+  <a href = "https://sell.smartstore.naver.com/">       네이버 스마트스토어  </a>  ,
+  <a href = "https://www.cafe24.com/" >                 CAFE24  </a>
 
 <br>
 
@@ -55,9 +53,9 @@
 
 
 <br>
- 
- ### ⚙ 기술 스택 <a name="기술-스택"></a>
- 
+
+### ⚙ 기술 스택 <a name="기술-스택"></a>
+
  <br>
 
 
@@ -73,7 +71,7 @@
     <img src = https://github.com/gi-dor/HTA/assets/86302876/c6642c07-c997-4546-8d92-cce09f8890f1 width = 90 height = 100/>
     <img src = https://github.com/gi-dor/HTA/assets/86302876/d4dc9837-a078-42bc-a014-21aa23a9fa40 width = 90 height = 100/>
 
- 
+
 
 <br>
 
@@ -86,8 +84,8 @@
   <img src = https://github.com/gi-dor/HTA/assets/86302876/99be659e-8a4a-4fce-bd35-378648682216 width = 100 height = 100/>
   <img src = https://github.com/gi-dor/HTA/assets/86302876/ea621051-e372-4792-8b07-e0df87798328  width = 100 height = 100/>
   <img src = https://github.com/gi-dor/HTA/assets/86302876/7223fa72-b4d6-449c-b97a-03ad47e1174b  width = 100 height = 100/>
- 
-  
+
+
 
  <br>
  <br>
@@ -104,12 +102,11 @@
 <br><br>
 
 
-
-### :clipboard: 컨벤션  <a name="컨벤션"></a>
 ----
 
+### 🔑 컨벤션  <a name="컨벤션"></a>
 
-### Git Commit 컨벤션
+#### Git Commit 컨벤션
 
 ```
 Feat              : 새로운 기능 추가
@@ -128,10 +125,6 @@ Remove	          : 파일을 삭제하는 작업만 수행한 경우
 Conflict          : 합병할때 충돌일어나서 수정한 경우
 
 ```
--  제목과 본문을 빈행으로 분리
-      + 커밋 유형 이후 제목과 본문은 한글로 작성하여 내용이 잘 전달될수 있게 할 것
-      + 본문에는 변경한 내용과 이유 설명 (어떻게  보다는  무엇을 ?  왜 ? 를 설명)
-
 
 📌 규칙에 맞는 커밋 메세지를 사용 하는 이유
 - 팀원과의 소통
@@ -140,7 +133,7 @@ Conflict          : 합병할때 충돌일어나서 수정한 경우
 
 
 
-### :file_folder:폴더 구조 
+#### 🧩 폴더 구조
 
 ```
 ├── java/
@@ -233,12 +226,7 @@ Conflict          : 합병할때 충돌일어나서 수정한 경우
 
 ```
 
-### 🎨 프로젝트 목적  <a name="프로젝트-목적"></a>
-
-
-
 <br>
-
 
 ----
 
@@ -250,7 +238,7 @@ Conflict          : 합병할때 충돌일어나서 수정한 경우
 
 <br>
 
-### 🧩 ERD <a name="ERD"></a>
+### 🧩 ERD <a name="모델링"></a>
 <br><br>
 
  <img src = https://github.com/gi-dor/HTA/assets/86302876/c16c0a17-e361-4ada-99e0-fb7f94cb664e />
@@ -262,14 +250,3 @@ Conflict          : 합병할때 충돌일어나서 수정한 경우
 
 ### 📌 프로젝트 이후 느낀점  <a name="프로젝트-이후-느낀점"></a>
 
-
------
-  
-### 참조 <a name="참조"></a>
-
-<br>
-
-- <a href = "https://www.youtube.com/user/MasterNKS"> 자바의 정석 </a>
-- <a href = "https://fastcampus.co.kr/dev_academy_nks"> 스프링의 정석 </a>
-- <a href = "https://www.w3schools.com/howto/howto_js_accordion.asp"> W3School </a>
-- <a href ="https://gi-dor.tistory.com/category/First/Spring"> 블로그 </a>
