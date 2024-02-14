@@ -1,8 +1,7 @@
 <br><br>
 
 <div align=center>
-<img src="https://capsule-render.vercel.app/api?type=waving&color=auto&customColorList=9&height=200&width=100%&section=header&text=Project%20SyuSyu!&fontSize=90" />    
-<img src="https://capsule-render.vercel.app/api?type=waving&color=auto&height=180&section=header&text=Project SyuSyu&fontSize=40" />
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=auto&height=200&width=100%&section=header&text=Project%20SyuSyu!&fontSize=90" />    
 </div>
 
 ---
