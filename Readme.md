@@ -1,38 +1,22 @@
-<h1 align="center">Welcome to SYUSYU 👋</h1>
+<br><br>
 
-<br>
-<br>
-
-### 🏚 Project SyuSyu
-- #### chaussure  : 마음에 들어하는 것
-
-<br>
-
-<p align = "center">
-<img src = https://github.com/gi-dor/HTA/assets/86302876/b667cba7-b643-4b85-9d4d-54ed1017f9ad width = 300 height = 300 />
-</p>
-
+<div align=center>
+    <img src="https://capsule-render.vercel.app/api?type=waving&color=auto&height=180&section=header&text=Project SyuSyu&fontSize=40" />
+</div>
 
 ---
-<br>
 
 ### 🐥 목차
 
 - [개요](#개요)
 - [기술 스택](#기술-스택)
 - [동영상](#동영상)
+- [프로젝트 이후 느낀점](#프로젝트-이후-느낀점)
+- [ERD](#모델링)
 - [컨벤션](#컨벤션)
 - [구현 기능](#구현-기능)
-- [ERD](#모델링)
-- [프로젝트 이후 느낀점](#프로젝트-이후-느낀점)
-
-
-<br>
 
 ----
-
-<br>
-
 
 ### 📃 개요 <a name="개요"></a>
 
@@ -50,9 +34,6 @@
 <br>
 
 ----------
-
-
-<br>
 
 ### ⚙ 기술 스택 <a name="기술-스택"></a>
 
@@ -95,14 +76,29 @@
 
 [![YouTube Badge](https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://youtu.be/H8s0jUxJAV4?si=1jmpjTnuhPU5TlqD)
 
-<br><br>
+-----
+
+<br>
+
+### 🧩 ERD (노란색) <a name="모델링"></a>
+<br>
+
+ <img src = https://github.com/gi-dor/HTA/assets/86302876/c16c0a17-e361-4ada-99e0-fb7f94cb664e />
+
+
+---------
+
+
+### 📌 프로젝트 이후 느낀점  <a name="프로젝트-이후-느낀점"></a>
+
+<br>
 
 
 ----
 
 ### 🔑 컨벤션  <a name="컨벤션"></a>
 
-#### Git Commit 컨벤션
+### Git Commit 컨벤션
 
 ```
 Feat              : 새로운 기능 추가
@@ -127,9 +123,38 @@ Conflict          : 합병할때 충돌일어나서 수정한 경우
 - 편리하게 과거 추적 가능
 - 나중에 실무에서도 익숙해지기 위해
 
+<br>
+
+----
+
+### 💻 구현 기능  <a name="구현-기능"></a>
+
+### 1. 공지사항 
+<img src="공지사항_List.jpg">
+<img src="공지사항 상세.jpg">
+
+### 2. 공지사항 _관리자
+   <img src="공지사항관리자_List.jpg">
+   <img src="공지사항관리자_글작성.jpg">
+   <img src="공지사항관리자_삭제.jpg">
+   <img src="공지사항작성,수정_관리자.jpg">
+
+### 3. FAQ
+  <img src="FAQ.jpg">
+  <img src="FAQ_상세1.jpg">
+  <img src="FAQ_상세2.jpg">
+
+### 4. FAQ 관리자
+  <img src="FAQ 관리자.jpg">
+
+### 5. 상품 리뷰
+   <img src="상품 리뷰.jpg">
+
+--------------
 
 
-#### 🧩 폴더 구조
+
+### 🧩 폴더 구조
 
 ```
 ├── java/
@@ -221,47 +246,3 @@ Conflict          : 합병할때 충돌일어나서 수정한 경우
                 └── icon/
 
 ```
-
-<br>
-
-----
-
-### 💻 구현 기능  <a name="구현-기능"></a>
-
-1. 공지사항 
-<img src="공지사항_List.jpg">
-<img src="공지사항 상세.jpg">
-
-2. 공지사항 _관리자
-   <img src="공지사항관리자_List.jpg">
-   <img src="공지사항관리자_글작성.jpg">
-   <img src="공지사항관리자_삭제.jpg">
-   <img src="공지사항작성,수정_관리자.jpg">
-
-3. FAQ
-  <img src="FAQ.jpg">
-  <img src="FAQ_상세1.jpg">
-  <img src="FAQ_상세2.jpg">
-
-4. FAQ 관리자
-  <img src="FAQ 관리자.jpg">
-
-5. 상품 리뷰
-   <img src="상품 리뷰.jpg">
-
---------------
-
-<br>
-
-### 🧩 ERD (노란색) <a name="모델링"></a>
-<br>
-
- <img src = https://github.com/gi-dor/HTA/assets/86302876/c16c0a17-e361-4ada-99e0-fb7f94cb664e />
-
-
----------
-
-<br>
-
-### 📌 프로젝트 이후 느낀점  <a name="프로젝트-이후-느낀점"></a>
-
